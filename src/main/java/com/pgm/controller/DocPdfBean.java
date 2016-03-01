@@ -56,6 +56,7 @@ public class DocPdfBean implements Serializable {
 		}
 	}
 	
+	//Mostra o PDF
 	public void mostraPdf(){
 		
 		try {			
