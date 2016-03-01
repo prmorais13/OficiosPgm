@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Sistema de Ofícios</title>
+	<h:outputStylesheet library="pgm" name="estilo.css" />
+	<h:outputScript library="pgm" name="sistema.js"/>
+	<link href="${facesContext.externalContext.requestContextPath}/resources/pgm/estilo.css" 
+          rel="stylesheet" type="text/css" />
+</h:head>
+<h:body>
+
+	<header>
+		<h:graphicImage library="pgm" name="logo2.png" width="400" height="70" />
+	</header>
+			
+	<h:form>
+		<p:menubar style="margin-top: -20px; margin-bottom: 20px">
+			<p:submenu label="Ofícios">
+				<p:menuitem value="Gerar" outcome="/OficiosGerados?faces-redirect=true" />
+				<p:menuitem value="Cadastrar" outcome="/OficiosCadastrados?faces-redirect=true" />
+				<p:menuitem value="Enviar" outcome="/OficiosEnviados?faces-redirect=true" />
+				<p:menuitem value="Receber" outcome="/OficiosRecebidos?faces-redirect=true" />
+			</p:submenu>
+			
+			<p:submenu label="Cadastro">
+				<p:menuitem value="Procurador" outcome="/procuradores/gestaoProcuradores?faces-redirect=true" />
+				<p:menuitem value="Secretaria" outcome="/secretarias/gestaoSecretarias?faces-redirect=true" />
+			</p:submenu>
+			
+			<p:submenu label="Segurança">
+				<p:submenu label="Usuário">
+					<p:menuitem value="Cadastro" outcome="/usuarios/gestaoUsuarios?faces-redirect=true"/>
+					<p:menuitem value="Listagem" outcome="/usuarios/listaUsuarios?faces-redirect=true"/>
+				</p:submenu>
+				<p:menuitem value="Grupo" outcome="/grupos/gestaoGrupos?faces-redirect=true" />
+			</p:submenu>
+			
+			<p:submenu label="Relatórios">
+				<p:submenu label="Ofícios">
+					<p:menuitem value="Por data" outcome="/porData?faces-redirect=true" />
+				</p:submenu>
+			</p:submenu>
+			
+			<p:submenu label="Minha conta">
+				<p:menuitem value="Sair" url="/j_spring_security_logout" />
+			</p:submenu>
+			<p:submenu label="Olá #{seguranca.nomeUsuario}" />
+		</p:menubar>
+				
+		<p:confirmDialog global="true">
+			<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="cancel" />
+			<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ok" />
+		</p:confirmDialog>
+	</h:form>
+	
+	<div id="conteudo">
+		<ui:insert name="corpo"></ui:insert>
+	</div>
+	
+	<footer>
+		Sistema de Gerenciamento de Ofícios - SGO/PGM
+	</footer>
+
+</h:body>
+</html>

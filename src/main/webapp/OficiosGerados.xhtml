@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+	
+		<f:metadata>
+			<f:viewAction action="#{secretariaBean.consulta}" />
+			<f:viewAction action="#{procuradoresBean.consultar}" />
+			<f:viewAction action="#{oficiosBean.consultarGerados}" />
+		</f:metadata>
+	
+		<h1>Gerar Ofício</h1>
+		
+		<h:form id="frm" >
+			
+			<p:growl autoUpdate="true" />
+			
+			<h:panelGrid columns="2" style="margin-top: 20px" id="painel">
+							
+				<p:outputLabel value="Destino" for="destino" />
+				<p:selectOneMenu id="destino" value="#{oficiosBean.oficioEdicao.destino}"
+					style="width: 300px" >				
+					<f:selectItem itemLabel="Selecione a secretaria" noSelectionOption="true" />
+					<f:selectItems value="#{secretariaBean.todasSecretarias}"
+						var="secretaria" itemLabel="#{secretaria.nome}" itemValue="#{secretaria.sigla}" />			
+				</p:selectOneMenu>
+			
+				<p:outputLabel value="Procurador" for="procurador" />
+				<p:selectOneMenu id="procurador" value="#{oficiosBean.oficioEdicao.procurador}"
+					style="width: 300px" >
+					<f:selectItem itemLabel="Selecione o procurador" noSelectionOption="true" />
+					<f:selectItems value="#{procuradoresBean.todosProcuradores}" var="procurador"
+						itemLabel="#{procurador.nome}" itemValue="#{procurador.nome}" />
+				</p:selectOneMenu>
+						
+				<p:outputLabel/>
+								
+				<h:panelGroup >
+					<p:commandButton id="btSalvar" icon="save" value="Salvar" process="painel"
+						 update="@form" action="#{oficiosBean.salvar}"  style="margin-top: 5px; 
+						 margin-right: 5px" />
+						
+					<p:commandButton id="btCancelar" icon="cancel" value="Cancelar" process="@this"
+						 update="@form" action="#{oficiosBean.cancelar}" >
+						<p:resetInput target="painel" />
+					</p:commandButton>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+			<p:dataTable value="#{oficiosBean.gerados}"
+				var="oficio" border="1" cellpadding="2" cellspacing="0"
+				paginator="true" paginatorPosition="bottom" rows="5" id="oficiosTable"
+				style="margin-top: 20px; width: 1000px" emptyMessage="Nenhum ofício gerado para cadastro!" >
+				
+				<f:facet name="header">
+					RELAÇÃO DOS OFÍCIOS GERADOS PARA CADASTRO
+				</f:facet>
+				
+				<p:column headerText="Nº Ofício" width="5" style="text-align: center" >
+					<h:outputText value="#{oficio.id}" />
+				</p:column>
+
+				<p:column headerText="Gerado em" width="10" style="text-align: center" >
+					<h:outputText value="#{oficio.dataCriacao}" >
+						<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					</h:outputText>				
+				</p:column>
+				
+				<p:column headerText="Hora" width="2" style="text-align: center" >
+					<h:outputText value="#{oficio.dataCriacao}" >
+						<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					</h:outputText>				
+				</p:column>
+
+				<p:column headerText="Solicitado por" width="100">
+					<h:outputText value="#{oficio.procurador}" />
+				</p:column>
+				
+				<p:column headerText="Secretaria destino" width="50">
+					<h:outputText value="#{oficio.destino}" />
+				</p:column>
+				
+				<p:column headerText="Opções" width="10" style="text-align: center">
+					<p:commandButton icon="cadastrar" process="@this" title="Cadastrar ofício"
+						action="#{oficiosBean.preparaCadastro(oficio)}" style="margin-right: 5px" />
+
+					<p:commandButton icon="edit" process="@this" update="@form"
+						title="Editar ofício" >
+						<f:setPropertyActionListener value="#{oficio}" 
+							target="#{oficiosBean.oficioEdicao}" />
+						<p:resetInput target="frm:painel" />
+					</p:commandButton>
+				</p:column>			
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

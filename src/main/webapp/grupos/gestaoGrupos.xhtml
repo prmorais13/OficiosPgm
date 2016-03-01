@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{grupoBean.consulta}" />
+		</f:metadata>
+	
+		<h1>Cadastro Grupos</h1>
+		
+		<h:form id="frm">
+			
+			<p:growl autoUpdate="true" />
+			
+			<h:panelGrid columns="2" style="margin-top: 20px" id="painel">
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" size="20" value="#{grupoBean.grupoEdicao.nome}"
+					onkeyup="maiusculo(this)" />
+				
+				<p:outputLabel value="Descricao" for="descricao" />
+				<p:inputText id="descricao" size="30" value="#{grupoBean.grupoEdicao.descricao}"
+					onkeyup="maiusculo(this)" />
+							
+				<p:outputLabel/>
+				
+				<p:commandButton value="Salvar" process="painel" update="@form" 
+					action="#{grupoBean.gravar}" style="margin-top: 5px" icon="save" />
+			</h:panelGrid>
+			
+			<p:dataTable value="#{grupoBean.todosGrupos}" 
+				var="grupo" border="1" cellpadding="2" cellspacing="0"
+				paginator="true" paginatorPosition="bottom" rows="10" id="grupoTable"
+				style="margin-top: 20px; width: 40%" emptyMessage="Nenhuma grupo cadastrado!" >
+				
+				<f:facet name="header">
+					RELAÇÃO GRUPOS CADASTRADOS
+				</f:facet>
+				
+				<p:column headerText="Nome" width="50">
+					<h:outputText value="#{grupo.nome}" />
+				</p:column>
+				
+				<p:column headerText="Descricao" width="100" >
+					<h:outputText value="#{grupo.descricao}" />
+				</p:column>
+				
+				<p:column headerText="Opções" width="10" style="text-align: center" >
+					<p:commandButton icon="lixeira" process="@this" update="grupoTable" 
+							action="#{grupoBean.excluir(grupo)}" style="margin-right: 5px"
+							title="Excluir" >
+						<p:confirm icon="alert" header="Confirmação de exclusão" 
+							message="Tem certeza que deseja excluir #{grupo.nome}?" />
+					</p:commandButton>
+					<p:commandButton icon="edit" process="@this" update="@form" title="Editar" >
+						<f:setPropertyActionListener value="#{grupo}" 
+							target="#{grupoBean.grupoEdicao}" />
+					</p:commandButton>
+				</p:column>			
+			</p:dataTable>
+		</h:form>		
+	</ui:define>
+</ui:composition>

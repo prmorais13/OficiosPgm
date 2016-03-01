@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{procuradoresBean.consultar}" />
+		</f:metadata>
+	
+		<h1>Cadastro Procurador</h1>
+		
+		<h:form id="frm">
+			
+			<p:growl autoUpdate="true" />
+			
+			<h:panelGrid columns="2" style="margin-top: 20px" id="painel">
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" size="40" value="#{procuradoresBean.procuradorEdicao.nome}"
+					onkeyup="maiusculo(this)" />
+				
+				<p:outputLabel value="OAB" for="oab" />
+				<p:inputText id="oab" size="15" value="#{procuradoresBean.procuradorEdicao.oab}"
+					onkeyup="maiusculo(this)" />
+				
+				<p:outputLabel value="Procuradoria" for="procuradoria" />
+				<p:selectOneMenu id="procuradoria" value="#{procuradoresBean.procuradorEdicao.procuradoria}">
+					<f:selectItem itemLabel="Selecione a Procuradoria" noSelectionOption="true"/>
+					<f:selectItems value="#{procuradoresBean.procuradorias}" var="proc"
+						itemLabel="#{proc.descricao}" itemValue="#{proc}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Email" for="email" />
+				<p:inputText id="email" size="30" value="#{procuradoresBean.procuradorEdicao.email}" />
+				
+				<p:outputLabel/>
+				<p:commandButton value="Salvar" icon="save" process="painel" update="@form" 
+					action="#{procuradoresBean.gravar}" style="margin-top: 5px" />
+			</h:panelGrid>
+			
+			<p:dataTable value="#{procuradoresBean.todosProcuradores}" 
+				var="procurador" border="1" cellpadding="2" cellspacing="0"
+				paginator="true" paginatorPosition="bottom" rows="10" id="procuradorTable"
+				style="margin-top: 20px; width: 70%" emptyMessage="Nenhum procurador cadastrado!" >
+				
+				<f:facet name="header">
+					RELAÇÃO PROCURADORES CADASTRADOS
+				</f:facet>
+				
+				<p:column headerText="Nome" width="60%">
+					<h:outputText value="#{procurador.nome}" />
+				</p:column>
+				
+				<p:column headerText="OAB" width="20%" style="text-align: center">
+					<h:outputText value="#{procurador.oab}" />
+				</p:column>
+				
+				<p:column headerText="Procuradoria" width="50%" >
+					<h:outputText value="#{procurador.procuradoria}" />
+				</p:column>
+				
+				<p:column headerText="Email" width="60%">
+					<h:outputText value="#{procurador.email}" />
+				</p:column>
+				
+				<p:column headerText="Opções" width="15%" style="text-align: center">
+					<p:commandButton icon="lixeira" process="@this" update="procuradorTable" 
+							action="#{procuradoresBean.excluir(procurador)}" title="Excluir"
+							style="margin-right: 5px" >
+						<p:confirm icon="alert" header="Confirmação de exclusão" 
+							message="Tem certeza que deseja excluir #{procurador.nome}?" />
+					</p:commandButton>
+					<p:commandButton icon="edit" process="@this" update="@form" title="Editar">
+						<f:setPropertyActionListener value="#{procurador}" 
+							target="#{procuradoresBean.procuradorEdicao}" />
+					</p:commandButton>
+				</p:column>			
+			</p:dataTable>
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>

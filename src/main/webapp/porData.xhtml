@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="corpo">
+
+		<h:form>
+			<h1>Ofícios por data</h1>
+			
+			<p:growl autoUpdate="true" />
+			
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Data criação" />
+				<h:panelGroup>
+					<p:calendar value="#{relatorioPorData.dataInicio}" label="Data início"
+						pattern="dd/MM/yyyy" size="8" />
+					<p:spacer width="8" />
+					<h:outputText value="a" />
+					<p:spacer width="8" />
+					<p:calendar value="#{relatorioPorData.dataFim}" label="Data final"
+						pattern="dd/MM/yyyy" size="8" />
+				</h:panelGroup>
+				<p:outputLabel />
+				<p:commandButton action="#{relatorioPorData.emitir}" value="Emitir"
+					ajax="false" style="margin-top: 10px" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

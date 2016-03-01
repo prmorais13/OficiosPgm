@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{grupoBean.consulta}" />
+		</f:metadata>
+	
+		<h1>Cadastro Usuarios</h1>
+		
+		<h:form id="frm">
+			
+			<p:growl autoUpdate="true" />
+			
+			<h:panelGrid columns="2" style="margin-top: 20px" id="painel">
+				<p:outputLabel value="Login" for="login" />
+				<p:inputText id="login" size="20" value="#{usuarioBean.usuarioEdicao.login}" />
+					
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" size="50" value="#{usuarioBean.usuarioEdicao.nome}"
+					onkeyup="maiusculo(this)" />
+				
+				<p:outputLabel value="Senha" for="senha" />
+				<p:password id="senha" size="10" value="#{usuarioBean.usuarioEdicao.senha}" />
+							
+				<p:outputLabel/>
+				
+				<h:panelGroup>
+					<p:commandButton value="Salvar" process="painel" update="@form" 
+						action="#{usuarioBean.gravar}" style="margin-top: 5px; margin-right: 5px"
+						icon="save" />
+					
+					<p:commandButton value="Grupo" action="#{usuarioBean.novoGrupo}" 
+						oncomplete="PF('dialogGrupo').show()"
+						process="@this" update="dialogGrupo" 
+						icon="grupo" style="margin-right: 5px" />
+						
+					<p:commandButton value="cancelar" icon="cancel" immediate="true" process="@this"
+						action="#{usuarioBean.cancelar}" update="@form :frm:grupoUsuarioTable" >
+						<p:resetInput target="painel" />
+					</p:commandButton>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+			<p:dataTable value="#{usuarioBean.usuarioEdicao.grupos}" 
+				var="grupo" border="1" cellpadding="2" cellspacing="0"
+				paginator="true" paginatorPosition="bottom" rows="10" id="grupoUsuarioTable"
+				style="width: 500px; margin-top: 15px" emptyMessage="Nenhum grupo cadastrado!" >
+					
+				<p:column headerText="Nome" width="15%">
+					<h:outputText value="#{grupo.nome}" />
+				</p:column>
+									
+				<p:column headerText="Descriçao" width="20%" >
+					<h:outputText value="#{grupo.descricao}" />
+				</p:column>
+					
+				<p:column headerText="Opções" width="5%" style="text-align: center" >
+					<p:commandButton icon="cancel" action="#{usuarioBean.removerGrupo}"
+						process="@this" update="grupoUsuarioTable"	title="Remove grupo" >
+						<f:setPropertyActionListener value="#{grupo}" target="#{usuarioBean.grupo}" />
+					</p:commandButton>
+				</p:column>			
+			</p:dataTable>
+			
+			<p:dialog widgetVar="dialogGrupo" dynamic="true" header="Gupos cadastrados"
+				id="dialogGrupo"  >
+			
+				<p:dataTable value="#{grupoBean.todosGrupos}" 
+					var="grupo" border="1" cellpadding="2" cellspacing="0"
+					paginator="true" paginatorPosition="bottom" rows="10" id="grupoTable"
+					style="width: 500px" emptyMessage="Nenhum grupo cadastrado!" >
+					
+					<p:column headerText="Nome" width="15%">
+						<h:outputText value="#{grupo.nome}" />
+					</p:column>
+									
+					<p:column headerText="Descriçao" width="20%" >
+						<h:outputText value="#{grupo.descricao}" />
+					</p:column>
+					
+					<p:column headerText="Opções" width="5%" style="text-align: center" >
+						<p:commandButton icon="adicionar" action="#{usuarioBean.adicionarGrupo}"
+							process="grupoTable" update=":frm:grupoUsuarioTable" title="Adiciona grupo" >
+							<f:setPropertyActionListener value="#{grupo}" target="#{usuarioBean.grupo}" />
+						</p:commandButton>
+					</p:column>			
+				</p:dataTable>						
+			</p:dialog>		
+		</h:form>	
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		
+		<!-- <script type="text/javascript" >
+			function abrir(filename, alt, lar){
+		   		var janelaPop = window.open(filename, "janela", "height=" + alt 
+		      	+ ",width=" + lar + ",scrollbars=no");
+
+		    	if(janelaPop.document.close()){
+		      		janelaPop.document.close();
+		    	}
+			}
+		</script> -->
+		
+		<f:metadata>
+			<f:viewAction action="#{oficiosBean.consultarRecebidos}" />
+		</f:metadata>
+	
+		<h1>Receber Ofício</h1>
+		
+		<h:form id="frm" >
+			
+			<p:growl autoUpdate="true" />
+			
+			<h:panelGrid columns="2" style="margin-top: 20px" id="painel">
+				
+				<h:panelGroup>
+					<p:outputLabel value="Nº Ofício:   " />
+					<h:outputText value="#{oficiosBean.oficioEdicao.id}"
+						style="font-size:14px; color:blue; font-weight:bold" />
+				</h:panelGroup>
+				
+				<p:outputLabel/>
+				
+				<h:panelGroup>
+					<p:outputLabel value="Gerado em:  " />			
+					<h:panelGroup>
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" 
+							style="font-size:14px; color:blue; font-weight:bold" >
+							<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						</h:outputText>		
+						<p:outputLabel value=" ÁS " style="font-size:14px; color:blue; font-weight:bold"
+							rendered="#{oficiosBean.oficioEdicao.dataCriacao != null}" />					
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}"
+							style="font-size:14px; color:blue; font-weight:bold" >
+							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						</h:outputText>	
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<p:outputLabel value="Cadastrado em:  " />			
+					<h:panelGroup>
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCadastro}" 
+							style="font-size:14px; color:blue; font-weight:bold" >
+							<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						</h:outputText>		
+						<p:outputLabel value=" ÁS " style="font-size:14px; color:blue; font-weight:bold"
+							rendered="#{oficiosBean.oficioEdicao.dataCadastro != null}" />					
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCadastro}"
+							style="font-size:14px; color:blue; font-weight:bold" >
+							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						</h:outputText>	
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<p:outputLabel value="Enviado em:  " />			
+					<h:panelGroup>
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataEnvio}" 
+							style="font-size:14px; color:blue; font-weight:bold" >
+							<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						</h:outputText>		
+						<p:outputLabel value=" ÁS " style="font-size:14px; color:blue; font-weight:bold"
+							rendered="#{oficiosBean.oficioEdicao.dataEnvio != null}" />					
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataEnvio}"
+							style="font-size:14px; color:blue; font-weight:bold" >
+							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						</h:outputText>	
+					</h:panelGroup>
+				</h:panelGroup>
+								
+				<h:panelGroup>
+					<p:outputLabel value="Solicitado por:  " />
+					<h:outputText value="#{oficiosBean.oficioEdicao.procurador}"
+						style="font-size:14px; color:blue; font-weight:bold" />
+				</h:panelGroup>
+				
+				<h:panelGroup>	
+					<p:outputLabel value="Setor de Origem:  " />
+					<h:outputText value="#{oficiosBean.oficioEdicao.setorOrigem}"
+						style="font-size:14px; color:blue; font-weight:bold" />
+				</h:panelGroup>
+				
+				<h:panelGroup>	
+					<p:outputLabel value="Interessado:  " />
+					<h:outputText value="#{oficiosBean.oficioEdicao.interessado}"
+						style="font-size:14px; color:blue; font-weight:bold" />
+				</h:panelGroup>
+				
+				<h:panelGroup>	
+					<p:outputLabel value="Tipo de Documento:  " />
+					<h:outputText value="#{oficiosBean.oficioEdicao.tipoDocumento}"
+						style="font-size:14px; color:blue; font-weight:bold" />
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<p:outputLabel value="Resp. envio:  " for="respEnvio" style="margin-top: 5px" />
+					<h:outputText id="respEnvio" value="#{oficiosBean.oficioEdicao.responsavelEnvio}"
+						style="font-size:14px; color:blue; font-weight:bold" />
+				</h:panelGroup>
+				
+				<p:outputLabel value="Resp. recebimento" for="respRecebimento" style="margin-top: 5px" />
+				<p:inputText id="respRecebimento" size="30" value="#{oficiosBean.oficioEdicao.responsavelRecebimento}"
+					style="margin-top: 5px" required="true" onkeyup="maiusculo(this)"
+					requiredMessage="ATENÇÃO: O Responsável pelo Recebimento deve ser informado!" />
+				
+				<p:outputLabel value="Enviar arquivo PDF" for="anexo" />
+				<p:fileUpload mode="advanced" value="#{docPdfBean.docPdf}" cancelLabel="Cancelar" label="Selecionar"
+					uploadLabel="Enviar" fileUploadListener="#{docPdfBean.capturarPdf}" id="anexo" sizeLimit="2000000"
+					invalidSizeMessage="Tamanho do arquivo superior a 2 MB" allowTypes="/(\.|\/)(pdf)$/"
+					invalidFileMessage="O arquivo tem que ser do tipo PDF" 
+					update="btSalvar" process="@this" auto="true" required="true" />
+												
+				<p:outputLabel/>
+				
+				<h:panelGroup>
+					<p:commandButton id="btSalvar" value="Salvar" icon="save" process="painel" update="@form"
+						action="#{oficiosBean.salvarRecebido}" disabled="#{oficiosBean.editavel}"
+						 style="margin-top: 5px; margin-right: 5px" />
+					
+					<p:commandButton id="btCancelar" value="Cancelar" icon="cancel" process="@this" update="@form"
+						action="#{oficiosBean.cancelar}" >
+						<p:resetInput target="painel" />
+					</p:commandButton>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+			<p:dataTable value="#{oficiosBean.recebidos}"
+				var="oficio" border="1" cellpadding="2" cellspacing="0"
+				paginator="true" paginatorPosition="bottom" rows="5" id="oficiosTable"
+				style="margin-top: 20px" emptyMessage="Nenhum ofício para recebimento!" >
+				
+				<f:facet name="header">
+					RELAÇÃO DOS OFÍCIOS ENVIADOS
+				</f:facet>
+				
+				<p:column headerText="Nº Ofício" width="5" style="text-align: center;" >
+					<h:outputText value="#{oficio.id}" />
+				</p:column>
+
+				<p:column headerText="Gerado em" width="10" style="text-align: center" >
+					<h:outputText value="#{oficio.dataCriacao}" >
+						<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					</h:outputText>				
+				</p:column>
+
+				<p:column headerText="Solicitado por" width="50">
+					<h:outputText value="#{oficio.procurador}" />
+				</p:column>
+				
+				<p:column headerText="Secretaria destino" width="30">
+					<h:outputText value="#{oficio.destino}" />
+				</p:column>
+				
+				<p:column headerText="Cadastrado em" width="15" style="text-align: center" >
+					<h:outputText value="#{oficio.dataCadastro}" style="text-align: right" >
+						<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					</h:outputText>				
+				</p:column>
+
+				<p:column headerText="Interessado" width="50">
+					<h:outputText value="#{oficio.interessado}" />
+				</p:column>
+				
+				<p:column headerText="Enviado em" width="10" style="text-align: center" >
+					<h:outputText value="#{oficio.dataEnvio}" style="text-align: right" >
+						<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					</h:outputText>				
+				</p:column>
+
+				<p:column headerText="Enviado por" width="50">
+					<h:outputText value="#{oficio.responsavelEnvio}" />
+				</p:column>
+				
+				<p:column headerText="Recebido em" width="10" style="text-align: center" >
+					<h:outputText value="#{oficio.dataRecebimento}" style="text-align: right" >
+						<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					</h:outputText>				
+				</p:column>
+								
+				<p:column headerText="Recebido por" width="30">
+					<h:outputText value="#{oficio.responsavelRecebimento}" />
+				</p:column>
+				
+				<p:column headerText="Resposta até" width="10" style="text-align: center" >
+					<h:outputText value="#{oficio.dataPrazo}" style="text-align: right" >
+						<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
+					</h:outputText>				
+				</p:column>
+				
+				<p:column headerText="Prazo" width="2" style="text-align: center" >
+					<h:outputText value="#{oficio.dias}" />
+				</p:column>
+				
+				<p:column headerText="Opções" width="10" style="text-align: center">
+					<p:commandButton id="btEditar" icon="edit" process="@this" update="@form"
+						title="Editar ofício" style="margin-right: 5px">
+						<f:setPropertyActionListener value="#{oficio}" 
+							target="#{oficiosBean.oficioEdicao}" />
+						<p:resetInput target="frm:painel" />
+					</p:commandButton>
+					
+					<p:commandButton id="btAbrir" icon="pdf" immediate="true" 
+						  onclick="abrir('docpdf?codigo=#{oficio.id}', 800, 1200)" 
+						  title="Visualizar ofício enviado" />
+				</p:column>
+			</p:dataTable>
+		</h:form>		
+	</ui:define>
+</ui:composition>
