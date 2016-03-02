@@ -1,5 +1,6 @@
 package com.pgm.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
@@ -38,7 +41,7 @@ public class RelatorioPorData implements Serializable {
 	@Inject
 	private EntityManager manager;
 	
-	public void emitir(){
+	public void emitir() throws ServletException, IOException{
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("data_inicio", this.dataInicio);
 		parametros.put("data_final", this.dataFim);
@@ -51,6 +54,7 @@ public class RelatorioPorData implements Serializable {
 		
 		if(executor.isRelatorioGerado()){
 			this.facesContext.responseComplete();
+
 		}else{
 			this.messages.error("A execução do relatório não retornou dados!");	
 		}

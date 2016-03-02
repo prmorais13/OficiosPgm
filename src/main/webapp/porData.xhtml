@@ -8,6 +8,11 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<ui:define name="corpo">
+		<!-- <script type="text/javascript" >
+			function abrirRel(){
+				window.open("exibeRelPorData.xhtml", "janela", "height=800,width=1200,scrollbars=yes")
+			}
+		</script> -->
 
 		<h:form>
 			<h1>Ofícios por data</h1>
@@ -26,8 +31,12 @@
 						pattern="dd/MM/yyyy" size="8" />
 				</h:panelGroup>
 				<p:outputLabel />
-				<p:commandButton action="#{relatorioPorData.emitir}" value="Emitir"
-					ajax="false" style="margin-top: 10px" />
+				<h:panelGroup>
+					<p:commandButton action="#{relatorioPorData.emitir}" value="Emitir"
+						ajax="false" style="margin-top: 10px" />
+					
+					<p:commandButton value="Cancelar" immediate="true" />				
+				</h:panelGroup>
 			</h:panelGrid>
 		</h:form>
 	</ui:define>

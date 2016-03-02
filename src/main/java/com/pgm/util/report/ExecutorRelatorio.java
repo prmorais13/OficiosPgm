@@ -60,7 +60,6 @@ public class ExecutorRelatorio implements Work {
 			
 	}
 
-
 	public boolean isRelatorioGerado() {
 		return relatorioGerado;
 	}

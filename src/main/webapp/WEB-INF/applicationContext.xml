@@ -17,6 +17,7 @@
         <intercept-url pattern="/menu.xhtml" access="isAuthenticated()" />
         <intercept-url pattern="/*.xhtml" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/docpdf" access="hasAnyRole('ADMIN', 'USER')" />
+        <intercept-url pattern="/RelServlet" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/procuradores/*" access="hasAnyRole('ADMIN')" />
         <intercept-url pattern="/secretarias/*" access="hasAnyRole('ADMIN')" />
         <intercept-url pattern="/grupos/*" access="hasAnyRole('ADMIN')" />
