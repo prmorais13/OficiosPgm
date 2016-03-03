@@ -22,20 +22,22 @@
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Data criação" />
 				<h:panelGroup>
-					<p:calendar value="#{relatorioPorData.dataInicio}" label="Data início"
+					<p:calendar value="#{relatorioServletBean.dataInicio}" label="Data início"
 						pattern="dd/MM/yyyy" size="8" />
 					<p:spacer width="8" />
 					<h:outputText value="a" />
 					<p:spacer width="8" />
-					<p:calendar value="#{relatorioPorData.dataFim}" label="Data final"
+					<p:calendar value="#{relatorioServletBean.dataFim}" label="Data final"
 						pattern="dd/MM/yyyy" size="8" />
 				</h:panelGroup>
 				<p:outputLabel />
 				<h:panelGroup>
 					<p:commandButton action="#{relatorioPorData.emitir}" value="Emitir"
-						ajax="false" style="margin-top: 10px" />
+						style="margin-top: 10px" />
 					
-					<p:commandButton value="Cancelar" immediate="true" />				
+					<p:commandButton action="#{relatorioServletBean.imprimirRelatorio}" value="Imprimir"
+						ajax="false" />
+						
 				</h:panelGroup>
 			</h:panelGrid>
 		</h:form>
