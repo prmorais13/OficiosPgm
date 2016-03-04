@@ -4,29 +4,32 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 
+import com.pgm.util.report.RelatorioUtil;
+
 @Named
-@SessionScoped
-public class RelatorioServletBean implements Serializable {
+@RequestScoped
+public class RelPorDataBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Date dataInicio;
 	private Date dataFim;
 
 	protected void redirect(String page) {
 		FacesContext ctx = FacesContext.getCurrentInstance();
-		ExternalContext ec = ctx.getExternalContext();
+		ExternalContext ec = ctx.getExternalContext();	
 		
 		try {
-			ec.dispatch(page);
-			//ec.redirect(ec.getRequestContextPath() + page);
+			//ec.dispatch(page);
+			ec.redirect(ec.getRequestContextPath() + page);
 		} catch (IOException ex) {
 			ex.printStackTrace();;
 		}
@@ -35,13 +38,14 @@ public class RelatorioServletBean implements Serializable {
 	public void imprimirRelatorio() throws Exception {
 		try {
 			FacesContext ctx = FacesContext.getCurrentInstance();
+					
 			HttpSession session = (HttpSession) ctx.getExternalContext()
 					.getSession(false);
 			
 			session.setAttribute("dataInicio", this.dataInicio);
 			session.setAttribute("dataFinal", this.dataFim);
-					
-			redirect("/RelServlet");
+			
+			redirect("/RelPorData");
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();;

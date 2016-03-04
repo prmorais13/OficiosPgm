@@ -14,7 +14,6 @@ import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
@@ -38,6 +37,9 @@ public class RelatorioPorData2 implements Serializable{
 	private Date dataFim;
 	
 	@Inject
+	private RelatorioUtil relatorioUtil;
+	
+	@Inject
 	private HttpServletResponse response;
 
 	@Inject
@@ -50,11 +52,11 @@ public class RelatorioPorData2 implements Serializable{
 		
 		String arqJasper = FacesContext.getCurrentInstance().getExternalContext()
 				.getRealPath("/WEB-INF/relatorios/relatorio_oficios.jasper");
-		
-		
-		byte[] bytes = RelatorioUtil.criarRelatorio(arqJasper, parametros);
+				
+		byte[] bytes = relatorioUtil.criarRelatorio(arqJasper, parametros);
 		
 		if (bytes != null && bytes.length > 0) {
+			response.addHeader("Content-disposition", "inline; filename=report.pdf");
 			response.setContentType("application/pdf");
 			response.setContentLength(bytes.length);
 			
@@ -65,7 +67,8 @@ public class RelatorioPorData2 implements Serializable{
 			
 			FacesContext.getCurrentInstance().responseComplete();
 			
-		}		
+		}
+
 	}
 	
 	@NotNull(message = "Entre com a data inicial!")
@@ -105,7 +108,7 @@ public class RelatorioPorData2 implements Serializable{
         response = (HttpServletResponse) context.getExternalContext().getResponse();
        /* HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         httpServletResponse.addHeader("Content-disposition", "attachment; filename=report.pdf");*/
-        response.addHeader("Content-disposition", "attachment; filename=report.pdf");
+        response.addHeader("Content-disposition", "inline; filename=report.pdf");
         ServletOutputStream servletOutputStream = response.getOutputStream();
        /* ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();*/
         JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);

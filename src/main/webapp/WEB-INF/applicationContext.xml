@@ -9,6 +9,8 @@
     <beans:bean id="appUserDetailsService" class="com.pgm.security.AppUserDetailsService" />
     
     <http pattern="/resources/**" security="none" />
+    <http pattern="/RelatorioPorData" security="none" />
+     <http pattern="/RelPorData" security="none" />
     <http pattern="/acessoNegado.xhtml" security="none" />
     <http pattern="/login.xhtml" security="none" />
     <http pattern="/javax.faces.resource/**" security="none" />
@@ -17,7 +19,6 @@
         <intercept-url pattern="/menu.xhtml" access="isAuthenticated()" />
         <intercept-url pattern="/*.xhtml" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/docpdf" access="hasAnyRole('ADMIN', 'USER')" />
-        <intercept-url pattern="/RelServlet" access="hasAnyRole('ADMIN', 'USER')" />
         <intercept-url pattern="/procuradores/*" access="hasAnyRole('ADMIN')" />
         <intercept-url pattern="/secretarias/*" access="hasAnyRole('ADMIN')" />
         <intercept-url pattern="/grupos/*" access="hasAnyRole('ADMIN')" />

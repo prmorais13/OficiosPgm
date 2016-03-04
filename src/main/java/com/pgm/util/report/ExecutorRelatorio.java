@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRExporter;
@@ -15,12 +16,17 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 import org.hibernate.jdbc.Work;
 
+import com.pgm.util.message.FacesMessages;
+
 public class ExecutorRelatorio implements Work {
 
 	private String caminhoRelatorio;
 	private HttpServletResponse response;
 	private Map<String , Object> parametros;
 	//private String nomeArquivoSaida;
+	
+	@Inject
+	FacesMessages messages;
 	
 	private boolean relatorioGerado;
 	
