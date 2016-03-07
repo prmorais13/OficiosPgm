@@ -30,7 +30,7 @@ public class RelatorioUtil implements Serializable {
 		try {
 			Connection con = Connect.getConexao();
 			
-			JasperReport relatorioJasper = (JasperReport) JRLoader.loadObjectFromFile(arqJasper);			
+			JasperReport relatorioJasper = (JasperReport) JRLoader.loadObjectFromFile(arqJasper);
 			
 			JasperPrint print = JasperFillManager.fillReport(relatorioJasper, parametros, con);
 			

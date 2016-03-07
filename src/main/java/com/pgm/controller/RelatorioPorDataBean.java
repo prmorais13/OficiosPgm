@@ -1,15 +1,22 @@
 package com.pgm.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
+import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.Session;
+
+import com.pgm.util.message.FacesMessages;
+import com.pgm.util.report.ExecutorRelatorio;
 
 @Named
 @RequestScoped
@@ -20,9 +27,18 @@ public class RelatorioPorDataBean implements Serializable {
 	private Date dataInicio;
 	private Date dataFim;
 	
+	@Inject
+	private FacesMessages messages;
+	
+	@Inject
+	private EntityManager manager;
+	
+	@Inject
+	private HttpServletResponse response;
+		
 	public void emitir(){
 		
-		try {
+		/*try {
 			FacesContext ctx = FacesContext.getCurrentInstance();
 			HttpSession session = (HttpSession) ctx.getExternalContext().getSession(false);
 			
@@ -46,9 +62,9 @@ public class RelatorioPorDataBean implements Serializable {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-	}
+	}*/
 		
-/*		Map<String, Object> parametros = new HashMap<>();
+		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("data_inicio", this.dataInicio);
 		parametros.put("data_final", this.dataFim);
 		
@@ -58,14 +74,14 @@ public class RelatorioPorDataBean implements Serializable {
 		Session session = manager.unwrap(Session.class);
 		session.doWork(executor);
 		
-		if(executor.isRelatorioGerado()){
-			this.facesContext.responseComplete();
+		if(executor.isRelatorioGerado()){			
+			FacesContext.getCurrentInstance().responseComplete();
 
 		}else{
 			this.messages.error("A execução do relatório não retornou dados!");	
 		}
 				
-	}*/
+	}
 	
 	@NotNull(message = "Entre com a data inicial!")
 	public Date getDataInicio() {

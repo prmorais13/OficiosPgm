@@ -22,21 +22,18 @@
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Data criação" />
 				<h:panelGroup>
-					<p:calendar value="#{relatorioPorData2.dataInicio}" label="Data início"
+					<p:calendar value="#{relatorioPorDataBean.dataInicio}" label="Data início"
 						pattern="dd/MM/yyyy" size="8" />
 					<p:spacer width="8" />
 					<h:outputText value="a" />
 					<p:spacer width="8" />
-					<p:calendar value="#{relatorioPorData2.dataFim}" label="Data final"
+					<p:calendar value="#{relatorioPorDataBean.dataFim}" label="Data final"
 						pattern="dd/MM/yyyy" size="8" />
 				</h:panelGroup>
 				<p:outputLabel />
 				<h:panelGroup>
-					<p:commandLink value="Emitir" actionListener="#{relatorioPorData2.emitir}"
-						ajax="false" target="_blank"/>
-					
-					<p:commandButton value="Cancelar" />
-						
+					<p:commandLink value="Emitir" actionListener="#{relatorioPorDataBean.emitir}"
+						ajax="false" target="_blank" />					
 				</h:panelGroup>
 			</h:panelGrid>
 		</h:form>
