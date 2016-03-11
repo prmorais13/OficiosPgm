@@ -68,7 +68,7 @@ public class RelatorioPorDataBean implements Serializable {
 		parametros.put("data_inicio", this.dataInicio);
 		parametros.put("data_final", this.dataFim);
 		
-		ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/relatorio_oficios.jasper",
+		ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/rel_oficios_por_data.jasper",
 				this.response, parametros, "Oficios por data.pdf");
 		
 		Session session = manager.unwrap(Session.class);
@@ -79,8 +79,7 @@ public class RelatorioPorDataBean implements Serializable {
 
 		}else{
 			this.messages.error("A execução do relatório não retornou dados!");	
-		}
-				
+		}				
 	}
 	
 	@NotNull(message = "Entre com a data inicial!")
@@ -100,5 +99,4 @@ public class RelatorioPorDataBean implements Serializable {
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
 	}
-
 }

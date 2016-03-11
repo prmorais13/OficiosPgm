@@ -6,14 +6,14 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import com.pgm.util.message.FacesMessages;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
+
+import com.pgm.util.message.FacesMessages;
 
 public class RelatorioUtil implements Serializable {
 
@@ -37,8 +37,6 @@ public class RelatorioUtil implements Serializable {
 			this.relatorioGerado = print.getPages().size() > 0;
 						
 			bytes = JasperRunManager.runReportToPdf(relatorioJasper, parametros,con);
-			
-			System.out.println("Bytes " + bytes.length);
 			
 		} catch (JRException  e) {
 			e.printStackTrace();

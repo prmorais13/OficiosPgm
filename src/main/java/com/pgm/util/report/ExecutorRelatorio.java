@@ -49,7 +49,7 @@ public class ExecutorRelatorio implements Work {
 			
 			JasperPrint print = JasperFillManager.fillReport(relatorioStream, this.parametros, connection);
 			this.relatorioGerado = print.getPages().size() > 0;
-			
+					
 			if(this.relatorioGerado){
 				JRExporter exportador = new JRPdfExporter();
 				exportador.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());

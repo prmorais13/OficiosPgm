@@ -3,7 +3,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions" >
 <h:head>
 	<meta charset="UTF-8"/>
 	<title>Sistema de Ofícios</title>
@@ -17,7 +18,9 @@
 	<header>
 		<h:graphicImage library="pgm" name="logo2.png" width="400" height="70" />
 	</header>
-			
+	
+	<p:growl id="geral" />
+	
 	<h:form>
 		<p:menubar style="margin-top: -20px; margin-bottom: 20px">
 			<p:submenu label="Ofícios">
@@ -43,6 +46,11 @@
 			<p:submenu label="Relatórios">
 				<p:submenu label="Ofícios">
 					<p:menuitem value="Por data" outcome="/porData?faces-redirect=true" />
+					
+					<p:menuitem value="Gerados" actionListener="#{relGeradosBean.emitir}" 
+						update="relGerados geral" />
+						
+					<p:menuitem value="Cadastrados" outcome="/exibeRelGeradosPdf?faces-redirect=true" />
 				</p:submenu>
 			</p:submenu>
 			
@@ -56,6 +64,13 @@
 			<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="cancel" />
 			<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ok" />
 		</p:confirmDialog>
+		
+		<p:lightBox widgetVar="relGerados" id="relGerados" iframe="true" style="margin-top: 20px" >
+			<f:facet name="inline" >
+				<p:media value="#{relGeradosBean.content}" height="800" width="900"
+					id="viewerGerados" player="pdf" cache="false" />
+			</f:facet>
+		</p:lightBox>		
 	</h:form>
 	
 	<div id="conteudo">
