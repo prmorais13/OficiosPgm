@@ -47,10 +47,11 @@
 				<p:submenu label="Ofícios">
 					<p:menuitem value="Por data" outcome="/porData?faces-redirect=true" />
 					
-					<p:menuitem value="Gerados" actionListener="#{relGeradosBean.emitir}" 
-						update="relGerados geral" />
+					<p:menuitem value="Gerados" actionListener="#{relatoriosBean.emitir('gerados')}" 
+						update="relatorio geral" />
 						
-					<p:menuitem value="Cadastrados" outcome="/exibeRelGeradosPdf?faces-redirect=true" />
+					<p:menuitem value="Cadastrados" actionListener="#{relatoriosBean.emitir('cadastrados')}" 
+						update="relatorio geral"  />
 				</p:submenu>
 			</p:submenu>
 			
@@ -65,10 +66,10 @@
 			<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ok" />
 		</p:confirmDialog>
 		
-		<p:lightBox widgetVar="relGerados" id="relGerados" iframe="true" style="margin-top: 20px" >
+		<p:lightBox widgetVar="relatorio" id="relatorio" iframe="true" style="margin-top: 20px" >
 			<f:facet name="inline" >
-				<p:media value="#{relGeradosBean.content}" height="800" width="900"
-					id="viewerGerados" player="pdf" cache="false" />
+				<p:media value="#{relatoriosBean.content}" height="800" width="900"
+					id="mediaRElatorio" player="pdf" cache="false" />
 			</f:facet>
 		</p:lightBox>		
 	</h:form>

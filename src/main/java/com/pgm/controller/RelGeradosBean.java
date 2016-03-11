@@ -1,8 +1,6 @@
 package com.pgm.controller;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -31,13 +29,13 @@ public class RelGeradosBean implements Serializable  {
 	private FacesMessages messages;
 	
 	public void emitir() {	
-		Map<String, Object> parametros = new HashMap<>();
+		//Map<String, Object> parametros = new HashMap<>();
 
 		String arqJasper = FacesContext.getCurrentInstance()
 				.getExternalContext()
 				.getRealPath("/WEB-INF/relatorios/rel_oficios_gerados.jasper");
 
-		byte[] bytes = relUtil.criarRelatorio(arqJasper, parametros);
+		byte[] bytes = relUtil.criarRelatorio(arqJasper, null);
 
 		//if (bytes != null && bytes.length > 0) {
 			
