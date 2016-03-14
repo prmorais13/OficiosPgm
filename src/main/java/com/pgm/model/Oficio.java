@@ -8,13 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "oficio")
@@ -24,8 +25,8 @@ public class Oficio implements Serializable {
 
 	// GERAÇÃO OFICIO
 	private Long id;
-	private String destino;
-	private String procurador;
+	private Secretaria destino;
+	private Procurador procurador;
 	private Date dataCriacao;
 	private String status;
 
@@ -58,23 +59,25 @@ public class Oficio implements Serializable {
 		this.id = id;
 	}
 
-	@NotEmpty(message = "ATENÇÃO: A Secretaria de destino deve ser informada!")
-	@Column(length = 60, nullable = false)
-	public String getDestino() {
+	@ManyToOne
+	@JoinColumn(name = "secretaria_id", nullable = false)
+	@NotNull(message = "ATENÇÃO: A Secretaria de destino deve ser informada!")
+	public Secretaria getDestino() {
 		return destino;
 	}
 
-	public void setDestino(String destino) {
+	public void setDestino(Secretaria destino) {
 		this.destino = destino;
 	}
 
-	@NotEmpty(message = "ATENÇÃO: O Procurador responsável deve ser informado!")
-	@Column(length = 60, nullable = false)
-	public String getProcurador() {
+	@ManyToOne
+	@JoinColumn(name = "procurador_id", nullable = false)
+	@NotNull(message = "ATENÇÃO: O Procurador responsável deve ser informado!")
+	public Procurador getProcurador() {
 		return procurador;
 	}
 
-	public void setProcurador(String procurador) {
+	public void setProcurador(Procurador procurador) {
 		this.procurador = procurador;
 	}
 

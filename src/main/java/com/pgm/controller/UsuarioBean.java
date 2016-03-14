@@ -46,7 +46,7 @@ public class UsuarioBean implements Serializable {
 	@Transacional
 	public void gravar(){	
 		//Griptografa senha com hash MD5
-		this.usuarioEdicao.setSenha(DigestUtils.md5Hex(this.usuarioEdicao.getSenha()));
+		//this.usuarioEdicao.setSenha(DigestUtils.md5Hex(this.usuarioEdicao.getSenha()));
 		
 		if(this.usuarioEdicao.getGrupos().size() == 0){
 			this.messages.error("Adicione o usuário a pelo menos um grupo!");

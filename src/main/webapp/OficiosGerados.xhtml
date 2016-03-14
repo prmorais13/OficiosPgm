@@ -20,14 +20,14 @@
 			
 			<p:growl autoUpdate="true" />
 			
-			<h:panelGrid columns="2" style="margin-top: 20px" id="painel">
+			<h:panelGrid columns="2" style="margin-top: 20px" id="painel" >
 							
 				<p:outputLabel value="Destino" for="destino" />
 				<p:selectOneMenu id="destino" value="#{oficiosBean.oficioEdicao.destino}"
 					style="width: 300px" >				
 					<f:selectItem itemLabel="Selecione a secretaria" noSelectionOption="true" />
 					<f:selectItems value="#{secretariaBean.todasSecretarias}"
-						var="secretaria" itemLabel="#{secretaria.nome}" itemValue="#{secretaria.sigla}" />			
+						var="secretaria" itemLabel="#{secretaria.nome}" itemValue="#{secretaria}" />			
 				</p:selectOneMenu>
 			
 				<p:outputLabel value="Procurador" for="procurador" />
@@ -35,7 +35,7 @@
 					style="width: 300px" >
 					<f:selectItem itemLabel="Selecione o procurador" noSelectionOption="true" />
 					<f:selectItems value="#{procuradoresBean.todosProcuradores}" var="procurador"
-						itemLabel="#{procurador.nome}" itemValue="#{procurador.nome}" />
+						itemLabel="#{procurador.nome}" itemValue="#{procurador}" />
 				</p:selectOneMenu>
 						
 				<p:outputLabel/>
@@ -78,11 +78,11 @@
 				</p:column>
 
 				<p:column headerText="Solicitado por" width="100">
-					<h:outputText value="#{oficio.procurador}" />
+					<h:outputText value="#{oficio.procurador.nome}" />
 				</p:column>
 				
 				<p:column headerText="Secretaria destino" width="50">
-					<h:outputText value="#{oficio.destino}" />
+					<h:outputText value="#{oficio.destino.sigla}" />
 				</p:column>
 				
 				<p:column headerText="Opções" width="10" style="text-align: center">
