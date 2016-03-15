@@ -1,52 +1,70 @@
 package com.pgm.controller;
 
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.ExternalContext;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
+import com.pgm.util.message.FacesMessages;
+import com.pgm.util.report.RelatorioUtil;
+
 @Named
-@RequestScoped
+@SessionScoped
 public class RelPorDataBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Date dataInicio;
 	private Date dataFim;
-
-	protected void redirect(String page) {
-		FacesContext ctx = FacesContext.getCurrentInstance();
-		ExternalContext ec = ctx.getExternalContext();	
+	private StreamedContent content;
+	
+	@Inject
+	private RelatorioUtil relUtil;
+	
+	@Inject
+	private FacesMessages messages;
+	
+	public void emitir() {	
 		
-		try {
-			//ec.dispatch(page);
-			ec.redirect(ec.getRequestContextPath() + page);
-		} catch (IOException ex) {
-			ex.printStackTrace();;
-		}
-	}
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("data_inicio", this.dataInicio);
+		parametros.put("data_final", this.dataFim);
 
-	public void imprimirRelatorio() throws Exception {
-		try {
-			FacesContext ctx = FacesContext.getCurrentInstance();
-					
-			HttpSession session = (HttpSession) ctx.getExternalContext()
-					.getSession(false);
+		String arqJasper = FacesContext.getCurrentInstance()
+				.getExternalContext()
+				.getRealPath("/WEB-INF/relatorios/rel_oficios_por_data.jasper");
+
+		byte[] bytes = relUtil.criarRelatorio(arqJasper, parametros);
+
+		//if (bytes != null && bytes.length > 0) {
 			
-			session.setAttribute("dataInicio", this.dataInicio);
-			session.setAttribute("dataFinal", this.dataFim);
+			if(relUtil.isRelatorioGerado()){
+
+				content = new DefaultStreamedContent(
+						new ByteArrayInputStream(bytes), "application/pdf");
+				
+				RequestContext.getCurrentInstance().execute("PF('relPorData').show()");
 			
-			redirect("/RelPorData");
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();;
-		}
+			}else{
+
+				messages.error("Não existem dados para gerar o relatório!");
+			}
+		//}
+		
+		this.dataFim = null;
+		this.dataInicio = null;
+		
 	}
 
 	@NotNull(message = "Informe a data inicial!")
@@ -65,6 +83,10 @@ public class RelPorDataBean implements Serializable {
 
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
+	}
+	
+	public StreamedContent getContent() {
+		return content;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.pgm.controller;
+package com.pgm.outros;
 
 import java.io.Serializable;
 import java.util.Date;

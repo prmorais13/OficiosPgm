@@ -1,4 +1,4 @@
-package com.pgm.controller;
+package com.pgm.outros;
 
 import java.io.IOException;
 import java.io.Serializable;
