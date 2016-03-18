@@ -22,23 +22,24 @@
 			<h:panelGrid columns="2" id="panelDatas">
 				<p:outputLabel value="Data criação" />
 				<h:panelGroup>
-					<p:calendar value="#{relPorDataBean2.dataInicio}" label="Data início"
+					<p:calendar value="#{relPorDataBean.dataInicio}" label="Data início"
 						pattern="dd/MM/yyyy" size="8" id="dataInicio" />
 					<p:spacer width="8" />
 					<h:outputText value="a" />
 					<p:spacer width="8" />
-					<p:calendar value="#{relPorDataBean2.dataFim}" label="Data final"
+					<p:calendar value="#{relPorDataBean.dataFim}" label="Data final"
 						pattern="dd/MM/yyyy" size="8" id="dataFinal" />
 				</h:panelGroup>
-				<p:outputLabel />
-				<h:panelGroup>
 				
-				<p:commandButton id="btn" value="Visualizar" action="#{relPorDataBean2.emitir}"
+				<p:outputLabel />
+				
+				<h:panelGroup>			
+				<p:commandButton id="btn" value="Visualizar" action="#{relPorDataBean.emitir}"
 					process="panelDatas" update="@form" />				
 				
 				<p:lightBox widgetVar="relPorData" id="relPorData" iframe="false" style="margin-top: 20px" >
 					<f:facet name="inline" >
-						<p:media value="#{relPorDataBean2.content}" height="800" width="900"
+						<p:media value="#{relPorDataBean.content}" height="800" width="900"
 							id="viewerPorData" player="pdf" cache="false" />
 					</f:facet>
 				</p:lightBox>

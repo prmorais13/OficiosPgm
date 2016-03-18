@@ -1,4 +1,4 @@
-package com.pgm.outros;
+package com.pgm.controller;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 

@@ -35,8 +35,12 @@ public class RelatoriosBean implements Serializable  {
 		
 		if(relatorio.equals("gerados")){
 			verificaRelatorio = "rel_oficios_gerados";
-		}else{
+		}else if(relatorio.equals("cadastrados")){
 			verificaRelatorio = "rel_oficios_cadastrados";
+		}else if(relatorio.equals("enviados")){
+			verificaRelatorio = "rel_oficios_enviados";
+		}else{
+			verificaRelatorio = "rel_oficios_recebidos";
 		}
 
 		String arqJasper = FacesContext.getCurrentInstance()

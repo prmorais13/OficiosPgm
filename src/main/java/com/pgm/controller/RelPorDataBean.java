@@ -47,20 +47,17 @@ public class RelPorDataBean implements Serializable {
 
 		byte[] bytes = relUtil.criarRelatorio(arqJasper, parametros);
 
-		//if (bytes != null && bytes.length > 0) {
-			
-			if(relUtil.isRelatorioGerado()){
+		if(relUtil.isRelatorioGerado()){
 
-				content = new DefaultStreamedContent(
-						new ByteArrayInputStream(bytes), "application/pdf");
+			content = new DefaultStreamedContent(
+				new ByteArrayInputStream(bytes), "application/pdf");
 				
-				RequestContext.getCurrentInstance().execute("PF('relPorData').show()");
+			RequestContext.getCurrentInstance().execute("PF('relPorData').show()");
 			
-			}else{
+		}else{
 
-				messages.error("Não existem dados para gerar o relatório!");
-			}
-		//}
+			messages.error("Não existem dados para gerar o relatório!");
+		}
 		
 		this.dataFim = null;
 		this.dataInicio = null;

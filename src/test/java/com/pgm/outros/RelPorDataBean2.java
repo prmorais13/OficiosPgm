@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 @Named
 @RequestScoped
-public class RelPorDataBean implements Serializable {
+public class RelPorDataBean2 implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -11,8 +11,11 @@
 		<title>Sistema de Ofícios - PDF</title>
 	</h:head>
 	<h:body>
-		<h:form>
-			<p:commandButton value="Teste" action="#{geralBean.geraRelatorio}" />
-		</h:form>			
+		<f:view>
+			<h:outputText value="Relatório não gerado #{geralBean.saida}" rendered="#{empty geralBean.saida}" />
+			<f:subview id="subRel" rendered="#{not empty geralBean.saida}">
+				<iframe id="iFrame" src="#{geralBean.saida}" width="99%" height="600px" style="min-height: 400px;" />
+			</f:subview>
+		</f:view>
 	</h:body>
 </html>

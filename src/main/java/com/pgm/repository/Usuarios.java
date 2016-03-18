@@ -32,6 +32,11 @@ public class Usuarios implements Serializable {
 	public List<Usuario> todos(){
 		return this.manager.createQuery("FROM Usuario", Usuario.class).getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> relUsuario(){
+		return this.manager.createQuery("FROM Usuario ORDER BY nome").getResultList(); 
+	}
 
 	public Usuario porLogin(String login) {
 		Usuario usuario = null;

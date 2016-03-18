@@ -51,7 +51,21 @@
 						update="relatorio geral" />
 						
 					<p:menuitem value="Cadastrados" actionListener="#{relatoriosBean.emitir('cadastrados')}" 
-						update="relatorio geral"  />
+						update="relatorio geral" />
+					
+					<p:menuitem value="Enviados" actionListener="#{relatoriosBean.emitir('enviados')}" 
+						update="relatorio geral" />
+					
+					<p:menuitem value="Recebidos" actionListener="#{relatoriosBean.emitir('recebidos')}" 
+						update="relatorio geral" />
+						
+					<p:menuitem value="Teste" action="#{geralBean.geraRelatorio}" />
+				</p:submenu>
+				
+				<p:submenu label="Outros">
+					<p:menuitem value="Usuarios" actionListener="#{relUsuarios.exportarPdf}" ajax="false"
+						target="_blank" />
+				
 				</p:submenu>
 			</p:submenu>
 			
@@ -66,12 +80,12 @@
 			<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ok" />
 		</p:confirmDialog>
 		
-		<p:lightBox widgetVar="relatorio" id="relatorio" iframe="true" style="margin-top: 20px" >
+		<p:lightBox widgetVar="relatorio" id="relatorio" iframe="true" style="margin-top: 20px" iframeTitle="Teste" >
 			<f:facet name="inline" >
 				<p:media value="#{relatoriosBean.content}" height="800" width="900"
 					id="mediaRElatorio" player="pdf" cache="false" />
 			</f:facet>
-		</p:lightBox>		
+		</p:lightBox>
 	</h:form>
 	
 	<div id="conteudo">
