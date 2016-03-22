@@ -14,6 +14,14 @@
           rel="stylesheet" type="text/css" />
 </h:head>
 <h:body>
+	<p:ajaxStatus styleClass="ajax-status">
+		<f:facet name="start">
+			<p:graphicImage library="icones" name="carregando_3.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
 
 	<header>
 		<h:graphicImage library="pgm" name="logo2.png" width="400" height="70" />

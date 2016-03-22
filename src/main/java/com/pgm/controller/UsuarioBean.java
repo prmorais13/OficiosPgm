@@ -27,6 +27,7 @@ public class UsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
 	private Usuario usuarioEdicao;
 	private List<Usuario> todosUsuarios;
 	
@@ -40,7 +41,7 @@ public class UsuarioBean implements Serializable {
 	
 	@PostConstruct
 	private void iniciar(){
-		this.usuarioEdicao = new Usuario();
+		//this.usuarioEdicao = new Usuario();
 	}
 	
 	@Transacional

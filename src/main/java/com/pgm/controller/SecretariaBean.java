@@ -18,7 +18,8 @@ import com.pgm.util.message.FacesMessages;
 public class SecretariaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	@Inject
 	private Secretaria secretariaEdicao;
 	private List<Secretaria> todasSecretarias;
 	
@@ -30,7 +31,7 @@ public class SecretariaBean implements Serializable {
 	
 	@PostConstruct
 	private void iniciar(){
-		this.secretariaEdicao = new Secretaria();
+		//this.secretariaEdicao = new Secretaria();
 	}
 	
 	@Transacional

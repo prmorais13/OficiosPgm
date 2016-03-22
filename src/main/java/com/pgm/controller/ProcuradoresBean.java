@@ -25,13 +25,15 @@ public class ProcuradoresBean implements Serializable {
 
 	@Inject
 	private FacesMessages messages;
-
+	
+	@Inject
 	private Procurador procuradorEdicao;
+	
 	private List<Procurador> todosProcuradores;
 	
 	@PostConstruct
 	public void iniciar(){
-		this.procuradorEdicao = new Procurador();
+		//this.procuradorEdicao = new Procurador();
 	}
 
 	@Transacional

@@ -19,6 +19,7 @@ public class GrupoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
 	private Grupo grupoEdicao;
 	private List<Grupo> todosGrupos;
 
@@ -30,7 +31,7 @@ public class GrupoBean implements Serializable {
 
 	@PostConstruct
 	private void iniciar() {
-		this.grupoEdicao = new Grupo();
+		//this.grupoEdicao = new Grupo();
 	}
 
 	@Transacional

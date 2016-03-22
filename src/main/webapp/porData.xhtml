@@ -34,17 +34,16 @@
 				<p:outputLabel />
 				
 				<h:panelGroup>			
-				<p:commandButton id="btn" value="Visualizar" action="#{relPorDataBean.emitir}"
-					process="panelDatas" update="@form" />				
-				
-				<p:lightBox widgetVar="relPorData" id="relPorData" iframe="false" style="margin-top: 20px" >
-					<f:facet name="inline" >
-						<p:media value="#{relPorDataBean.content}" height="800" width="900"
-							id="viewerPorData" player="pdf" cache="false" />
-					</f:facet>
-				</p:lightBox>
+					<p:commandButton id="btnRelPorData" value="Visualizar" action="#{relPorDataBean.emitir}"
+						process="panelDatas" update="@form" />				
 				</h:panelGroup>
 			</h:panelGrid>
+			
+			<p:dialog widgetVar="relPorData" id="relPorData" style="margin-top: 5px" modal="true"
+				header="Relatório por data" fitViewport="true" >
+				<p:media value="#{relPorDataBean.content}" height="800" width="1200"
+					id="viewerPorData" player="pdf" cache="false" />
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -27,16 +27,19 @@ public class OficiosBean implements Serializable {
 	
 	@Inject
 	private DocPdfBean docPdfBean;
+	
+	@Inject
+	private Oficio oficioEdicao;
 
 	private List<Oficio> gerados;
 	private List<Oficio> cadastrados;
 	private List<Oficio> enviados;
 	private List<Oficio> recebidos;
-	private Oficio oficioEdicao;
+	
 	
 	@PostConstruct
 	public void iniciar(){
-		this.oficioEdicao = new Oficio();
+		//this.oficioEdicao = new Oficio();
 	}
 
 	//Métodos dos ofícios gerados
