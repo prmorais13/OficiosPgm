@@ -10,3 +10,7 @@
       		janelaPop.document.close();
     	}
 	}
+	
+	function abrirRel(){
+		window.open("exibeRelatorios.xhtml", "janela", "height=800,width=1200,scrollbars=yes");
+	}

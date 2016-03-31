@@ -16,6 +16,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import com.pgm.security.Seguranca;
 import com.pgm.util.message.FacesMessages;
 import com.pgm.util.report.RelatorioUtil;
 
@@ -30,20 +31,27 @@ public class RelPorDataBean implements Serializable {
 	private StreamedContent content;
 	
 	@Inject
+	private Seguranca seguranca;
+	
+	@Inject
 	private RelatorioUtil relUtil;
 	
 	@Inject
 	private FacesMessages messages;
 	
-	public void emitir() {	
+	public void emitir() {
+		
+		String logo = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/imagens/logo.png");
 		
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("data_inicio", this.dataInicio);
 		parametros.put("data_final", this.dataFim);
+		parametros.put("nome_usuario", this.seguranca.getNomeUsuario());
+		parametros.put("logomarca", logo);
 
 		String arqJasper = FacesContext.getCurrentInstance()
 				.getExternalContext()
-				.getRealPath("/WEB-INF/relatorios/rel_oficios_por_data.jasper");
+				.getRealPath("/jasper/rel_oficios_por_data.jasper");
 
 		byte[] bytes = relUtil.criarRelatorio(arqJasper, parametros);
 

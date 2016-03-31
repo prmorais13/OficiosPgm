@@ -23,6 +23,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import com.pgm.model.Usuario;
 import com.pgm.repository.Usuarios;
 import com.pgm.security.Seguranca;
+import com.pgm.util.message.FacesMessages;
 
 @Named
 @RequestScoped
@@ -36,21 +37,40 @@ public class RelUsuarios implements Serializable {
 	@Inject
 	private Seguranca seguranca;
 	
+	@Inject
+	private FacesMessages messages; 
+	
 	private List<Usuario> listaUsuarios;
 	
+	private boolean relatorioGerado;
+	
 	public void exportarPdf() throws JRException, IOException{
-		Map<String, Object> param = new HashMap<>();
-		param.put("nome_usuario", this.seguranca.getNomeUsuario() );
 		
-		File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/jasper/teste.jasper"));
+		String logo = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/imagens/logo.png");
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("nome_usuario", this.seguranca.getNomeUsuario());
+		param.put("logomarca", logo);
+		
+		File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/jasper/rel_usuarios.jasper"));
 		JasperPrint print = JasperFillManager.fillReport(jasper.getPath(), param, new JRBeanCollectionDataSource(getListaUsuarios()));
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		response.addHeader("Content-disposition", "inline; filename=ListaUsuarios.pdf");
-		ServletOutputStream stream = response.getOutputStream();
-		JasperExportManager.exportReportToPdfStream(print, stream);
-		stream.flush();
-		stream.close();
-		FacesContext.getCurrentInstance().responseComplete();
+		
+		this.relatorioGerado = print.getPages().size() > 0;
+		
+		System.out.println("Valor " + this.relatorioGerado);
+		
+		if(this.relatorioGerado){
+			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+			response.addHeader("Content-disposition", "inline; filename=ListaUsuarios.pdf");
+			ServletOutputStream stream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(print, stream);
+			stream.flush();
+			stream.close();
+			FacesContext.getCurrentInstance().responseComplete();
+		
+		}else{
+			messages.info("Não há dados para gerar o relatório!");
+		}
 	}
 	
 
@@ -60,6 +80,11 @@ public class RelUsuarios implements Serializable {
 		}
 		
 		return listaUsuarios;
+	}
+
+
+	public boolean isRelatorioGerado() {
+		return relatorioGerado;
 	}
 
 }

@@ -32,6 +32,12 @@ public class Oficios implements Serializable {
 				Oficio.class).getResultList();
 	}
 	
+	public List<Oficio> gerados(){
+		return manager.createQuery("FROM Oficio o INNER JOIN o.destino d INNER JOIN o.procurador p " +
+				"WHERE o.status = 'GERADO'", Oficio.class).getResultList();
+	}
+
+	
 	//Métodos dos ofícios cadastrados	
 	public Oficio salvarCadastro(Oficio oficio){
 		if(oficio.getDataCadastro() == null){

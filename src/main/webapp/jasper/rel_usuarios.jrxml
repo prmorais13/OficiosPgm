@@ -11,6 +11,7 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\SME\\Documents\\workspace luna\\OficiosPgm\\src\\main\\webapp\\jasper\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="logomarca" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -28,14 +29,24 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="32" splitType="Stretch">
+		<band height="36" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="2937efea-5351-4018-b108-4f01af203f19" x="0" y="0" width="555" height="27"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="21" isBold="true"/>
+				<reportElement uuid="2937efea-5351-4018-b108-4f01af203f19" x="0" y="0" width="555" height="36"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Lista de usuários]]></text>
+				<text><![CDATA[Lista de usuários do sistema]]></text>
 			</staticText>
+			<image isUsingCache="true">
+				<reportElement uuid="130c70a8-7d13-45e5-8cbe-678a11caff56" x="6" y="2" width="30" height="32"/>
+				<imageExpression><![CDATA[$P{logomarca}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<columnHeader>
@@ -84,7 +95,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="19" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement uuid="19491351-7938-472b-95d8-57ea4a605033" x="0" y="0" width="358" height="17"/>
 				<textElement verticalAlignment="Middle">
@@ -92,9 +103,16 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Impresso por " + $P{nome_usuario} + " em " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date())]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement uuid="04ee2575-a086-426a-aa59-3bcf8148386b" x="494" y="0" width="61" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="20" splitType="Stretch"/>
 	</summary>
 </jasperReport>
