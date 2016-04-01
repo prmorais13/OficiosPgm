@@ -37,7 +37,15 @@
 					<f:selectItems value="#{procuradoresBean.todosProcuradores}" var="procurador"
 						itemLabel="#{procurador.nome}" itemValue="#{procurador}" />
 				</p:selectOneMenu>
-						
+				
+				<p:outputLabel value="Número PA" for="numeroPa" />
+				<p:inputText id="numeroPa" value="#{oficiosBean.oficioEdicao.numeroPa}" required="true"
+					requiredMessage="O número do Processo Administrativo é obrigatório!" />
+					
+				<p:outputLabel value="Número PJ" for="numeroPj" />
+				<p:inputText id="numeroPj" value="#{oficiosBean.oficioEdicao.numeroPj}" required="true"
+					requiredMessage="O número do Processo Judicial é obrigatório!" />		
+									
 				<p:outputLabel/>
 								
 				<h:panelGroup >
@@ -55,7 +63,7 @@
 			<p:dataTable value="#{oficiosBean.gerados}"
 				var="oficio" border="1" cellpadding="2" cellspacing="0"
 				paginator="true" paginatorPosition="bottom" rows="5" id="oficiosTable"
-				style="margin-top: 20px; width: 1000px" emptyMessage="Nenhum ofício gerado para cadastro!" >
+				style="margin-top: 20px; width: 90%" emptyMessage="Nenhum ofício gerado para cadastro!" >
 				
 				<f:facet name="header">
 					RELAÇÃO DOS OFÍCIOS GERADOS PARA CADASTRO
@@ -83,6 +91,14 @@
 				
 				<p:column headerText="Secretaria destino" width="50">
 					<h:outputText value="#{oficio.destino.sigla}" />
+				</p:column>
+				
+				<p:column headerText="Número PA" width="50">
+					<h:outputText value="#{oficio.numeroPa}" />
+				</p:column>
+				
+				<p:column headerText="Número PJ" width="50">
+					<h:outputText value="#{oficio.numeroPj}" />
 				</p:column>
 				
 				<p:column headerText="Opções" width="10" style="text-align: center">

@@ -36,23 +36,40 @@
 							rendered="#{oficiosBean.oficioEdicao.dataCriacao != null}" />					
 						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}"
 							style="font-size:14px; color:blue; font-weight:bold" >
-							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" />
-						</h:outputText>	
+							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" pattern="MM:ss" />
+						</h:outputText>
+			
+						<p:outputLabel value="Solicitado por:   " style="margin-left: 15px" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.procurador.nome}"
+							style="font-size:14px; color:blue; font-weight:bold" />
+
 					</h:panelGroup>
 				</h:panelGroup>
 				
 				<p:outputLabel/>
 				
 				<h:panelGroup>
-					<p:outputLabel value="Solicitado por:   " />
-					<h:outputText value="#{oficiosBean.oficioEdicao.procurador.nome}"
-						style="font-size:14px; color:blue; font-weight:bold" />
+					<h:panelGroup>
+						<p:outputLabel value="Número PA:   " />
+						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPa}"
+							style="font-size:14px; color:blue; font-weight:bold" />
+					</h:panelGroup>
+					
+					<h:panelGroup>
+						<p:outputLabel value="Número PJ:   " style="margin-left: 15px" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPj}"
+							style="font-size:14px; color:blue; font-weight:bold" />
+					</h:panelGroup>
 				</h:panelGroup>
 								
-				<p:outputLabel value="Setor de Origem" for="origem" style="margin-top: 10px"/>
-				<p:inputText value="#{oficiosBean.oficioEdicao.setorOrigem}" id="origem" size="30"
-					required="true" requiredMessage="ATENÇÃO: O Setor de Origem deve ser informado!"
-					style="margin-top: 10px" onkeyup="maiusculo(this)" />
+				<p:outputLabel value="Setor de Origem" for="origem" />
+				<p:selectOneMenu id="origem" value="#{oficiosBean.oficioEdicao.setorOrigem}"
+					 style="margin-top: 15px" required="true"
+					 requiredMessage="ATENÇÃO: O setor de origem é obrigatório!" >
+					<f:selectItem itemLabel="Selecione o setor" noSelectionOption="true"/>
+					<f:selectItems value="#{procuradoresBean.procuradorias}" var="proc"
+						itemLabel="#{proc.descricao}" itemValue="#{proc}" />
+				</p:selectOneMenu>
 				
 				<p:outputLabel value="Interessado" for="interessado" />
 				<p:inputText id="interessado" size="40" value="#{oficiosBean.oficioEdicao.interessado}"
@@ -60,9 +77,12 @@
 					onkeyup="maiusculo(this)" />
 				
 				<p:outputLabel value="Tipo documento" for="tipoDocumento" />
-				<p:inputText id="tipoDocumento" size="20" value="#{oficiosBean.oficioEdicao.tipoDocumento}"
-					required="true" requiredMessage="ATENÇÃO: O Tipo de Documento deve ser informado!"
-					onkeyup="maiusculo(this)" />
+				<p:selectOneMenu id="tipoDocumento" value="#{oficiosBean.oficioEdicao.tipoDocumento}"
+					 required="true" requiredMessage="ATENÇÃO: O setor tipo de documento é obrigatório!" >
+					<f:selectItem itemLabel="Selecione o tipo" noSelectionOption="true"/>
+					<f:selectItem itemLabel="OFÍCIO INTERNO" itemValue="OFÍCIO INTERNO" />
+					<f:selectItem itemLabel="MEMORANDO" itemValue="MEMORANDO" />
+				</p:selectOneMenu>
 				
 				<p:outputLabel value="Assunto" for="assunto" />
 				<p:inputTextarea id="assunto" value="#{oficiosBean.oficioEdicao.assunto}"

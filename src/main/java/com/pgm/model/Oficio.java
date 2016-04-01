@@ -27,6 +27,8 @@ public class Oficio implements Serializable {
 	private Long id;
 	private Secretaria destino;
 	private Procurador procurador;
+	private String numeroPa;
+	private String numeroPj;
 	private Date dataCriacao;
 	private String status;
 
@@ -48,6 +50,10 @@ public class Oficio implements Serializable {
 	private int dias;
 	private byte[] docPdf;
 
+	//RESPOSTA
+	private Date dataResposta;
+	private String respCadastroResposta;
+	private byte[] oficioResposta;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,6 +85,24 @@ public class Oficio implements Serializable {
 
 	public void setProcurador(Procurador procurador) {
 		this.procurador = procurador;
+	}
+	
+	@Column(name = "numero_pa", length = 30, nullable = false)
+	public String getNumeroPa() {
+		return numeroPa;
+	}
+	
+	public void setNumeroPa(String numeroPa) {
+		this.numeroPa = numeroPa;
+	}
+	
+	@Column(name = "numero_pj", length = 30, nullable = false)
+	public String getNumeroPj() {
+		return numeroPj;
+	}
+	
+	public void setNumeroPj(String numeroPj) {
+		this.numeroPj = numeroPj;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -213,6 +237,35 @@ public class Oficio implements Serializable {
 		this.docPdf = docPdf;
 	}
 	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "data_resposta")
+	public Date getDataResposta() {
+		return dataResposta;
+	}
+
+	public void setDataResposta(Date dataResposta) {
+		this.dataResposta = dataResposta;
+	}
+
+	@Column(name = "resp_cadatro_resposta", length = 60)
+	public String getRespCadastroResposta() {
+		return respCadastroResposta;
+	}
+
+	public void setRespCadastroResposta(String respCadastroResposta) {
+		this.respCadastroResposta = respCadastroResposta;
+	}
+
+	@Lob
+	@Column(name = "oficio_resposta", columnDefinition = "longblob")
+	public byte[] getOficioResposta() {
+		return oficioResposta;
+	}
+
+	public void setOficioResposta(byte[] oficioResposta) {
+		this.oficioResposta = oficioResposta;
+	}
+
 	public void numDias(){
 		
 		if(this.dataPrazo != null){

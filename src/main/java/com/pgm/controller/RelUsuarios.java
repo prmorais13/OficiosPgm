@@ -57,7 +57,7 @@ public class RelUsuarios implements Serializable {
 		
 		this.relatorioGerado = print.getPages().size() > 0;
 		
-		System.out.println("Valor " + this.relatorioGerado);
+		//System.out.println("Valor " + this.relatorioGerado);
 		
 		if(this.relatorioGerado){
 			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
