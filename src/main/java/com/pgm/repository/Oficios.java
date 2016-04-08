@@ -17,6 +17,16 @@ public class Oficios implements Serializable {
 	@Inject
 	private EntityManager manager;
 	
+	private int prazoResposta;
+	
+	public int getPrazoResposta() {
+		return prazoResposta;
+	}
+	
+	public void setPrazoResposta(int prazoResposta) {
+		this.prazoResposta = prazoResposta;
+	}
+	
 	//Métodos dos ofícios gerados
 	public Oficio salvarGerado(Oficio oficio){
 		if(oficio.getId() == null){
@@ -75,7 +85,7 @@ public class Oficios implements Serializable {
 			
 			Calendar c = Calendar.getInstance();
 			c.setTime(oficio.getDataRecebimento());
-			c.add(Calendar.DATE, + 10);
+			c.add(Calendar.DATE, + oficio.getPrazo());
 			oficio.setDataPrazo(c.getTime());
 		
 			oficio.setStatus("RECEBIDO");

@@ -37,6 +37,7 @@ public class Oficio implements Serializable {
 	private String setorOrigem;
 	private String interessado;
 	private String tipoDocumento;
+	private int prazo;
 	private String assunto;
 
 	// ENVIO
@@ -159,6 +160,14 @@ public class Oficio implements Serializable {
 
 	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+	}
+	
+	public int getPrazo() {
+		return prazo;
+	}
+	
+	public void setPrazo(int prazo) {
+		this.prazo = prazo;
 	}
 
 	public String getAssunto() {
