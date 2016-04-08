@@ -25,40 +25,36 @@
 						style="font-size:14px; color:blue; font-weight:bold" />
 				</h:panelGroup>
 				
-				<h:panelGroup>
+				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
+					style="font-size:14px; color:blue; font-weight:bold" >
+					
 					<p:outputLabel value="Gerado em:   " />			
 					<h:panelGroup>
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" 
-							style="font-size:14px; color:blue; font-weight:bold" >
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" >
 							<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
 						</h:outputText>		
-						<p:outputLabel value=" ÁS " style="font-size:14px; color:blue; font-weight:bold"
-							rendered="#{oficiosBean.oficioEdicao.dataCriacao != null}" />					
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}"
-							style="font-size:14px; color:blue; font-weight:bold" >
+						<p:outputLabel value=" ÁS " />					
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" >
 							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" pattern="MM:ss" />
 						</h:outputText>
 			
 						<p:outputLabel value="Solicitado por:   " style="margin-left: 15px" />
-						<h:outputText value="#{oficiosBean.oficioEdicao.procurador.nome}"
-							style="font-size:14px; color:blue; font-weight:bold" />
-
+						<h:outputText value="#{oficiosBean.oficioEdicao.procurador.nome}" />
 					</h:panelGroup>
 				</h:panelGroup>
 				
 				<p:outputLabel/>
 				
-				<h:panelGroup>
+				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
+					style="font-size:14px; color:blue; font-weight:bold" >
 					<h:panelGroup>
 						<p:outputLabel value="Número PA:   " />
-						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPa}"
-							style="font-size:14px; color:blue; font-weight:bold" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPa}" />
 					</h:panelGroup>
 					
 					<h:panelGroup>
 						<p:outputLabel value="Número PJ:   " style="margin-left: 15px" />
-						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPj}"
-							style="font-size:14px; color:blue; font-weight:bold" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPj}" />
 					</h:panelGroup>
 				</h:panelGroup>
 

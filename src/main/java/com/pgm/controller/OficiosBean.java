@@ -35,6 +35,7 @@ public class OficiosBean implements Serializable {
 	private List<Oficio> cadastrados;
 	private List<Oficio> enviados;
 	private List<Oficio> recebidos;
+	private List<Oficio> respondidos;
 	
 	
 	@PostConstruct
@@ -129,7 +130,7 @@ public class OficiosBean implements Serializable {
 		}
 		
 		if(!this.docPdfBean.isCapturadoPdf()){
-			this.messages.error("O Ofício enviado no formato PDF deve ser anexado!");
+			this.messages.error("Cópia do Ofício enviado deve ser anexada!");
 		}else{
 			this.oficioEdicao.setDocPdf(this.docPdfBean.getDocPdf().getContents());	
 			this.oficios.salvarRecebido(this.oficioEdicao);
@@ -146,7 +147,40 @@ public class OficiosBean implements Serializable {
 		this.recebidos = this.oficios.todosRecebidos();
 
 	}
+	
+	public String preparaResposta(Oficio oficio){
+		this.oficioEdicao = oficio;
+		return "OficiosRespondidos?faces-redirect=true";
+	}
+	
+	//Métodos dos ofícios respondidos
+	@Transacional
+	public void salvarRespondido() {
+		if(this.oficioEdicao.getDataResposta() != null && !this.oficioEdicao.getStatus().equals("RESPONDIDO")){
+			this.messages.info("ATENÇÃO: O Ofício está com o status de " + this.oficioEdicao.getStatus() +
+				" e não pode ser editado nesta tela!");
+			this.cancelar();
+		}
+		
+		if(!this.docPdfBean.isCapturadoPdf()){
+			this.messages.error("Cópia da resposta do ofício deve ser anexada!");
+		}else{
+			this.oficioEdicao.setOficioResposta(this.docPdfBean.getDocPdf().getContents());	
+			this.oficios.salvarRespondido(this.oficioEdicao);
+			this.oficioEdicao = new Oficio();
+			this.consultarRespondidos();
+				
+			this.messages.info("Resposta de ofício cadastrada com sucesso!");
+		}
 			
+		this.docPdfBean.limparAnexo();
+	}
+			
+	public void consultarRespondidos() {
+		this.respondidos = this.oficios.todosRespondidos();
+
+	}
+		
 	public void cancelar(){
 		this.oficioEdicao = new Oficio();
 		this.docPdfBean.limparAnexo();
@@ -176,6 +210,10 @@ public class OficiosBean implements Serializable {
 
 	public List<Oficio> getRecebidos() {
 		return recebidos;
+	}
+	
+	public List<Oficio> getRespondidos() {
+		return respondidos;
 	}
 	
 	public boolean isEditavel(){

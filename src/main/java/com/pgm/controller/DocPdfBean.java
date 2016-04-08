@@ -79,6 +79,13 @@ public class DocPdfBean implements Serializable {
 		/*System.out.println("OFICIO NÚMERO: " + id);
 		return manager.find(Oficio.class, id).getDocPdf();*/
 	}
+	
+	public byte[] lerRespostaPdf(Long id){
+		Query consulta = manager.createQuery("SELECT oficioResposta FROM Oficio WHERE id = :id");
+		return (byte[]) consulta.setParameter("id", id).getSingleResult();
+		/*System.out.println("OFICIO NÚMERO: " + id);
+		return manager.find(Oficio.class, id).getDocPdf();*/
+	}
 
 	public void limparAnexo() {
 		this.docPdf = null;

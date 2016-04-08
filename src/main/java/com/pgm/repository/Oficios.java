@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import com.pgm.model.Oficio;
+import com.pgm.security.Seguranca;
 
 public class Oficios implements Serializable {
 
@@ -16,6 +17,9 @@ public class Oficios implements Serializable {
 	
 	@Inject
 	private EntityManager manager;
+	
+	@Inject
+	private Seguranca seguranca;
 	
 	private int prazoResposta;
 	
@@ -98,6 +102,30 @@ public class Oficios implements Serializable {
 		return manager.createQuery("FROM Oficio WHERE status = 'RECEBIDO' ORDER BY dataRecebimento DESC",
 				Oficio.class).getResultList();
 	}
+	
+	//Métodos dos ofícios respondidos
+		public Oficio salvarRespondido(Oficio oficio){
+			
+			if(oficio.getDataResposta() == null){
+				oficio.setDataResposta(new Date());
+				
+				/*Calendar c = Calendar.getInstance();
+				c.setTime(oficio.getDataRecebimento());
+				c.add(Calendar.DATE, + oficio.getPrazo());
+				oficio.setDataPrazo(c.getTime());*/
+			
+				oficio.setStatus("RESPONDIDO");
+			}
+			
+			oficio.setRespCadastroResposta(this.seguranca.getNomeUsuario());
+			
+			return manager.merge(oficio);
+		}
+		
+		public List<Oficio> todosRespondidos(){
+			return manager.createQuery("FROM Oficio WHERE status = 'RESPONDIDO' ORDER BY dataResposta DESC",
+					Oficio.class).getResultList();
+		}
 
 	public Oficio porId(Long id) {
 		return manager.find(Oficio.class, id);
