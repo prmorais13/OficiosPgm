@@ -42,6 +42,8 @@ public class Oficios implements Serializable {
 			//seta a data de criação com a data atual do sistema
 			oficio.setDataCriacao(new Date());
 			
+			oficio.setStatus("GERADO");
+			
 			//instancia um sequencial
 			Sequencial s = new Sequencial();
 			
@@ -52,10 +54,13 @@ public class Oficios implements Serializable {
 			
 			if(ano.format(s.getAnoOficio()).equals(ano.format(new Date()))){
 				
+				//adiciona 1 ao número do ofício
 				int numero = s.getSequencial() + 1;
-
+				
+				//seta o número do ofício com o novo número na entidade Oficio
 				oficio.setNumOficio(numero);
 				
+				//seta o número do ofício na entidade Sequencial
 				s.setSequencial(numero);
 				
 			}else{
@@ -64,49 +69,13 @@ public class Oficios implements Serializable {
 				s.setSequencial(1);
 				s.setAnoOficio(new Date());	
 			}
-			
-			oficio.setStatus("GERADO");
-			
+
 			//atualiza a tabela Sequencial 
 			this.sequenciais.atualizar(s);
 		}
 		
+		//salva os dados na tabela Oficio
 		return manager.merge(oficio);	
-	}
-	
-	public void salvarTeste(Oficio oficio){
-		
-		Sequencial s = new Sequencial();
-		s = this.sequenciais.numOficio();
-		
-		SimpleDateFormat ano = new SimpleDateFormat("yyyy");
-		
-		System.out.println("Ano tabela sequencial: " + ano.format(s.getAnoOficio()));
-		
-		System.out.println("Ano atual: " + ano.format(new Date()));
-		
-		if(ano.format(s.getAnoOficio()).equals(ano.format(new Date()))){
-			
-			int numero = s.getSequencial() + 1;
-			
-			System.out.println("Número é igual a: " + numero);
-			//oficio.setNumOficio(numero);
-			
-			s.setSequencial(numero);
-			
-			//this.sequenciais.atualizar(s);
-		
-		}else{
-			
-			System.out.println("sequencial antes: " + s.getSequencial());
-			
-			s.setSequencial(0);
-			
-			System.out.println("sequencial depois: " + s.getSequencial());
-		}
-		
-		this.sequenciais.atualizar(s);
-		
 	}
 	
 	public List<Oficio> todosGerados(){
@@ -119,7 +88,7 @@ public class Oficios implements Serializable {
 				"WHERE o.status = 'GERADO'", Oficio.class).getResultList();
 	}
 
-	
+
 	//Métodos dos ofícios cadastrados	
 	public Oficio salvarCadastro(Oficio oficio){
 		if(oficio.getDataCadastro() == null){
@@ -172,28 +141,27 @@ public class Oficios implements Serializable {
 	}
 	
 	//Métodos dos ofícios respondidos
-		public Oficio salvarRespondido(Oficio oficio){
+	public Oficio salvarRespondido(Oficio oficio){
 			
-			if(oficio.getDataResposta() == null){
-				oficio.setDataResposta(new Date());
-				
-				/*Calendar c = Calendar.getInstance();
-				c.setTime(oficio.getDataRecebimento());
-				c.add(Calendar.DATE, + oficio.getPrazo());
-				oficio.setDataPrazo(c.getTime());*/
-			
-				oficio.setStatus("RESPONDIDO");
-			}
-			
-			oficio.setRespCadastroResposta(this.seguranca.getNomeUsuario());
-			
-			return manager.merge(oficio);
+		if(oficio.getDataResposta() == null){
+			oficio.setDataResposta(new Date());
+
+			oficio.setStatus("RESPONDIDO");
 		}
+			
+		oficio.setRespCadastroResposta(this.seguranca.getNomeUsuario());
+			
+		return manager.merge(oficio);
+	}
 		
-		public List<Oficio> todosRespondidos(){
-			return manager.createQuery("FROM Oficio WHERE status = 'RESPONDIDO' ORDER BY dataResposta DESC",
-					Oficio.class).getResultList();
-		}
+	public List<Oficio> todosRespondidos(){
+		return manager.createQuery("FROM Oficio WHERE status = 'RESPONDIDO' ORDER BY dataResposta DESC",
+				Oficio.class).getResultList();
+	}
+		
+	public List<Oficio> todosExpirados(){
+		return manager.createQuery("FROM Oficio WHERE status = 'RECEBIDO' AND dataPrazo < " + new Date(), Oficio.class).getResultList();
+	}
 
 	public Oficio porId(Long id) {
 		return manager.find(Oficio.class, id);

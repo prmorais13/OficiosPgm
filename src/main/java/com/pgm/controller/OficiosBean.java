@@ -36,16 +36,12 @@ public class OficiosBean implements Serializable {
 	private List<Oficio> enviados;
 	private List<Oficio> recebidos;
 	private List<Oficio> respondidos;
+	private List<Oficio> expirados;
 	
 	
 	@PostConstruct
 	public void iniciar(){
 		//this.oficioEdicao = new Oficio();
-	}
-	
-	@Transacional
-	public void salvarTeste(){
-		this.oficios.salvarTeste(this.oficioEdicao);
 	}
 
 	//Métodos dos ofícios gerados
@@ -185,6 +181,10 @@ public class OficiosBean implements Serializable {
 		this.respondidos = this.oficios.todosRespondidos();
 
 	}
+	
+	public void consultarExpirados(){
+		this.expirados = this.oficios.todosExpirados();
+	}
 		
 	public void cancelar(){
 		this.oficioEdicao = new Oficio();
@@ -219,6 +219,10 @@ public class OficiosBean implements Serializable {
 	
 	public List<Oficio> getRespondidos() {
 		return respondidos;
+	}
+	
+	public List<Oficio> getExpirados() {
+		return expirados;
 	}
 	
 	public boolean isEditavel(){
