@@ -160,7 +160,14 @@ public class Oficios implements Serializable {
 	}
 		
 	public List<Oficio> todosExpirados(){
-		return manager.createQuery("FROM Oficio WHERE status = 'RECEBIDO' AND dataPrazo < " + new Date(), Oficio.class).getResultList();
+		Date a = new Date();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		String ano = f.format(a);
+		
+		System.out.println("Data = " + ano);
+		
+		return manager.createQuery("FROM Oficio WHERE dataPrazo < '" + ano + "'", Oficio.class).getResultList();
+
 	}
 
 	public Oficio porId(Long id) {
