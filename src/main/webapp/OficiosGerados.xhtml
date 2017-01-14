@@ -57,6 +57,9 @@
 						 update="@form" action="#{oficiosBean.cancelar}" >
 						<p:resetInput target="painel" />
 					</p:commandButton>
+					
+					<p:commandButton id="btTeste" value="Testar" actionListener="#{oficiosBean.salvarTeste}" /> 
+
 				</h:panelGroup>
 			</h:panelGrid>
 			
@@ -70,7 +73,7 @@
 				</f:facet>
 				
 				<p:column headerText="Nº Ofício" width="5" style="text-align: center" >
-					<h:outputText value="#{oficio.id}" />
+					<h:outputText value="#{oficio.numOficio}" />
 				</p:column>
 
 				<p:column headerText="Gerado em" width="10" style="text-align: center" >

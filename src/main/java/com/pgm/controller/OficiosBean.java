@@ -42,6 +42,11 @@ public class OficiosBean implements Serializable {
 	public void iniciar(){
 		//this.oficioEdicao = new Oficio();
 	}
+	
+	@Transacional
+	public void salvarTeste(){
+		this.oficios.salvarTeste(this.oficioEdicao);
+	}
 
 	//Métodos dos ofícios gerados
 	@Transacional

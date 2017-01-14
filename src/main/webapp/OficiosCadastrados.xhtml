@@ -17,44 +17,48 @@
 			
 			<p:growl autoUpdate="true" />
 			
-			<h:panelGrid columns="2" style="margin-top: 20px" id="painel">
+			<h:panelGrid columns="2" style="margin-top: 20px" id="painel"
+				rendered="#{oficiosBean.oficioEdicao.id != null}" >
 			
 				<h:panelGroup>
 					<p:outputLabel value="Nº Ofício:   " />
-					<h:outputText value="#{oficiosBean.oficioEdicao.id}"
-						style="font-size:14px; color:blue; font-weight:bold" />
+					<h:outputText value="#{oficiosBean.oficioEdicao.numOficio}"
+						styleClass="dados" />
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Gerado em:   " />			
 					<h:panelGroup>
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" >
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}"
+							styleClass="dados" >
 							<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
 						</h:outputText>		
 						<p:outputLabel value=" ÁS " />					
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" >
-							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" pattern="MM:ss" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}"
+							styleClass="dados" >
+							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo"
+								pattern="HH:mm" />
 						</h:outputText>
 			
 						<p:outputLabel value="Solicitado por:   " style="margin-left: 15px" />
-						<h:outputText value="#{oficiosBean.oficioEdicao.procurador.nome}" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.procurador.nome}"
+							styleClass="dados" />
 					</h:panelGroup>
 				</h:panelGroup>
 				
 				<p:outputLabel/>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
+				<h:panelGroup>
 					<h:panelGroup>
 						<p:outputLabel value="Número PA:   " />
-						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPa}" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPa}"
+							styleClass="dados" />
 					</h:panelGroup>
 					
 					<h:panelGroup>
 						<p:outputLabel value="Número PJ:   " style="margin-left: 15px" />
-						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPj}" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.numeroPj}"
+							styleClass="dados" />
 					</h:panelGroup>
 				</h:panelGroup>
 
@@ -71,22 +75,19 @@
 				<p:inputText id="interessado" size="40" value="#{oficiosBean.oficioEdicao.interessado}"
 					required="true" requiredMessage="ATENÇÃO: O Interessado deve ser informado!"
 					onkeyup="maiusculo(this)" />
-				
-				
+		
 				<p:outputLabel value="Tipo documento" for="tipoDocumento" />
 				<h:panelGroup>
-				<p:selectOneMenu id="tipoDocumento" value="#{oficiosBean.oficioEdicao.tipoDocumento}"
-					 required="true" requiredMessage="ATENÇÃO: O setor tipo de documento é obrigatório!"
-					 style="margin-top: 5px" >
-					<f:selectItem itemLabel="Selecione o tipo" noSelectionOption="true"/>
-					<f:selectItem itemLabel="OFÍCIO INTERNO" itemValue="OFÍCIO INTERNO" />
-					<f:selectItem itemLabel="MEMORANDO" itemValue="MEMORANDO" />
-				</p:selectOneMenu>
-				
-				<p:outputLabel value="Prazo" for="prazo" style="margin-left: 10px" />
-				<p:inputText id="prazo" size="5" value="#{oficiosBean.oficioEdicao.prazo}"
-					required="true" requiredMessage="ATENÇÃO: O prazo deve ser informado" />
-				
+					<p:selectOneMenu id="tipoDocumento" value="#{oficiosBean.oficioEdicao.tipoDocumento}"
+						 required="true" requiredMessage="ATENÇÃO: O setor tipo de documento é obrigatório!" >
+						<f:selectItem itemLabel="Selecione o tipo" noSelectionOption="true"/>
+						<f:selectItem itemLabel="OFÍCIO INTERNO" itemValue="OFÍCIO INTERNO" />
+						<f:selectItem itemLabel="MEMORANDO" itemValue="MEMORANDO" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Prazo" for="prazo" style="margin-left: 10px" />
+					<p:inputText id="prazo" size="5" value="#{oficiosBean.oficioEdicao.prazo}"
+						required="true" requiredMessage="ATENÇÃO: O prazo deve ser informado" />
 				</h:panelGroup>
 				
 				<p:outputLabel value="Assunto" for="assunto" />
@@ -118,7 +119,7 @@
 				</f:facet>
 				
 				<p:column headerText="Nº Ofício" width="5" style="text-align: center;" >
-					<h:outputText value="#{oficio.id}" />
+					<h:outputText value="#{oficio.numOficio}" />
 				</p:column>
 
 				<p:column headerText="Gerado em" width="10" style="text-align: center" >

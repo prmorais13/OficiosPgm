@@ -7,18 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="corpo">
-		
-		<!-- <script type="text/javascript" >
-			function abrir(filename, alt, lar){
-		   		var janelaPop = window.open(filename, "janela", "height=" + alt 
-		      	+ ",width=" + lar + ",scrollbars=no");
-
-		    	if(janelaPop.document.close()){
-		      		janelaPop.document.close();
-		    	}
-			}
-		</script> -->
-		
+	
 		<f:metadata>
 			<f:viewAction action="#{oficiosBean.consultarRecebidos}" />
 		</f:metadata>
@@ -29,101 +18,101 @@
 			
 			<p:growl autoUpdate="true" />
 			
-			<h:panelGrid columns="2" style="margin-top: 20px" id="painel">
+			<h:panelGrid columns="2" style="margin-top: 20px" id="painel"
+				 rendered="#{oficiosBean.oficioEdicao.id != null}" >
 
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
+				<h:panelGroup>
 					
 					<p:outputLabel value="Nº Ofício:   " />
-					<h:outputText value="00" />
+					<h:outputText value="00"  styleClass="dados" />
 						
-					<h:outputText value="#{oficiosBean.oficioEdicao.id}/" />
+					<h:outputText value="#{oficiosBean.oficioEdicao.numOficio}/"
+						 styleClass="dados" />
 					
-					<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" >
+					<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}"
+						 styleClass="dados" >
 						<f:convertDateTime pattern="yyyy" />
 					</h:outputText>	
 				</h:panelGroup>
 				
 				<p:outputLabel/>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Gerado em:  " />			
 					<h:panelGroup>
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" >
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}"
+							 styleClass="dados" >
 							<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
 						</h:outputText>		
 						<p:outputLabel value=" ÁS " />					
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}" >
-							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCriacao}"
+							 styleClass="dados" >
+							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo"
+								pattern="HH:mm" />
 						</h:outputText>	
 					</h:panelGroup>
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Cadastrado em:  " />			
 					<h:panelGroup>
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataCadastro}" >
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCadastro}"
+							 styleClass="dados" >
 							<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
 						</h:outputText>		
 						<p:outputLabel value=" ÁS " />					
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataCadastro}" >
-							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataCadastro}"
+							 styleClass="dados" >
+							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo"
+								pattern="HH:mm" />
 						</h:outputText>	
 					</h:panelGroup>
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Enviado em:  " />			
 					<h:panelGroup>
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataEnvio}" >
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataEnvio}"
+							 styleClass="dados" >
 							<f:convertDateTime type="date" locale="pt_BR" timeZone="America/Sao_Paulo" />
 						</h:outputText>		
 						<p:outputLabel value=" ÁS " />					
-						<h:outputText value="#{oficiosBean.oficioEdicao.dataEnvio}" >
-							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo" />
+						<h:outputText value="#{oficiosBean.oficioEdicao.dataEnvio}"
+						 	 styleClass="dados" >
+							<f:convertDateTime type="time" locale="pt_BR" timeZone="America/Sao_Paulo"
+								pattern="HH:mm" />
 						</h:outputText>	
 					</h:panelGroup>
 				</h:panelGroup>
 								
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Solicitado por:  " />
-					<h:outputText value="#{oficiosBean.oficioEdicao.procurador.nome}" />
+					<h:outputText value="#{oficiosBean.oficioEdicao.procurador.nome}"
+					 	styleClass="dados"  />
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Setor de Origem:  " />
-					<h:outputText value="#{oficiosBean.oficioEdicao.setorOrigem}" />
+					<h:outputText value="#{oficiosBean.oficioEdicao.setorOrigem}"
+					 	styleClass="dados" />
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Interessado:  " />
-					<h:outputText value="#{oficiosBean.oficioEdicao.interessado}" />
+					<h:outputText value="#{oficiosBean.oficioEdicao.interessado}"
+						 styleClass="dados" />
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Tipo de Documento:  " />
-					<h:outputText value="#{oficiosBean.oficioEdicao.tipoDocumento}" />
+					<h:outputText value="#{oficiosBean.oficioEdicao.tipoDocumento}"
+						 styleClass="dados" />
 				</h:panelGroup>
 				
-				<h:panelGroup rendered="#{oficiosBean.oficioEdicao.id != null}"
-					style="font-size:14px; color:blue; font-weight:bold" >
-					
+				<h:panelGroup>
 					<p:outputLabel value="Resp. envio:  " for="respEnvio" style="margin-top: 5px" />
-					<h:outputText id="respEnvio" value="#{oficiosBean.oficioEdicao.responsavelEnvio}" />
+					<h:outputText id="respEnvio" value="#{oficiosBean.oficioEdicao.responsavelEnvio}"
+						 styleClass="dados" />
 				</h:panelGroup>
 
 				<p:outputLabel value="Resp. recebimento" for="respRecebimento" style="margin-top: 5px" />
@@ -162,7 +151,7 @@
 				</f:facet>
 				
 				<p:column headerText="Nº Ofício" width="5" style="text-align: center;" >
-					<h:outputText value="00#{oficio.id}" />
+					<h:outputText value="00#{oficio.numOficio}" />
 				</p:column>
 
 				<p:column headerText="Gerado em" width="10" style="text-align: center" >

@@ -1,6 +1,7 @@
 package com.pgm.repository;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import com.pgm.model.Oficio;
+import com.pgm.model.Sequencial;
 import com.pgm.security.Seguranca;
 
 public class Oficios implements Serializable {
@@ -20,6 +22,9 @@ public class Oficios implements Serializable {
 	
 	@Inject
 	private Seguranca seguranca;
+	
+	@Inject
+	private Sequenciais sequenciais;
 	
 	private int prazoResposta;
 	
@@ -34,11 +39,74 @@ public class Oficios implements Serializable {
 	//Métodos dos ofícios gerados
 	public Oficio salvarGerado(Oficio oficio){
 		if(oficio.getId() == null){
+			//seta a data de criação com a data atual do sistema
 			oficio.setDataCriacao(new Date());
 			
+			//instancia um sequencial
+			Sequencial s = new Sequencial();
+			
+			//atribui ao sequencial o resultado da pesquisa 
+			s = this.sequenciais.numOficio();
+			
+			SimpleDateFormat ano = new SimpleDateFormat("yyyy");
+			
+			if(ano.format(s.getAnoOficio()).equals(ano.format(new Date()))){
+				
+				int numero = s.getSequencial() + 1;
+
+				oficio.setNumOficio(numero);
+				
+				s.setSequencial(numero);
+				
+			}else{
+				
+				oficio.setNumOficio(1);
+				s.setSequencial(1);
+				s.setAnoOficio(new Date());	
+			}
+			
 			oficio.setStatus("GERADO");
+			
+			//atualiza a tabela Sequencial 
+			this.sequenciais.atualizar(s);
 		}
+		
 		return manager.merge(oficio);	
+	}
+	
+	public void salvarTeste(Oficio oficio){
+		
+		Sequencial s = new Sequencial();
+		s = this.sequenciais.numOficio();
+		
+		SimpleDateFormat ano = new SimpleDateFormat("yyyy");
+		
+		System.out.println("Ano tabela sequencial: " + ano.format(s.getAnoOficio()));
+		
+		System.out.println("Ano atual: " + ano.format(new Date()));
+		
+		if(ano.format(s.getAnoOficio()).equals(ano.format(new Date()))){
+			
+			int numero = s.getSequencial() + 1;
+			
+			System.out.println("Número é igual a: " + numero);
+			//oficio.setNumOficio(numero);
+			
+			s.setSequencial(numero);
+			
+			//this.sequenciais.atualizar(s);
+		
+		}else{
+			
+			System.out.println("sequencial antes: " + s.getSequencial());
+			
+			s.setSequencial(0);
+			
+			System.out.println("sequencial depois: " + s.getSequencial());
+		}
+		
+		this.sequenciais.atualizar(s);
+		
 	}
 	
 	public List<Oficio> todosGerados(){

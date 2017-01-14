@@ -25,6 +25,7 @@ public class Oficio implements Serializable {
 
 	// GERAÇÃO OFICIO
 	private Long id;
+	private int NumOficio;
 	private Secretaria destino;
 	private Procurador procurador;
 	private String numeroPa;
@@ -64,6 +65,15 @@ public class Oficio implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@Column(name = "num_oficio")
+	public int getNumOficio() {
+		return NumOficio;
+	}
+	
+	public void setNumOficio(int numOficio) {
+		NumOficio = numOficio;
 	}
 
 	@ManyToOne
